@@ -24,7 +24,7 @@ class Stock extends Model
             $row['height'] = $row['height'];
             $row['thickness'] = $row['thickness'];
             $row['merchant_id'] = (int) $row['merchant_id'];
-            $row['product_id'] = (int) $row['product_id'];
+            $row['rawMaterial_id'] = (int) $row['rawMaterial_id'];
             $originalDate = $row['dop'];
             $row['dop']  = date("d/m/yy", strtotime($originalDate));
             $json[] = $row;
@@ -33,7 +33,7 @@ class Stock extends Model
     }
     function getStock(){
         $json = [];
-        $sql = "SELECT  stocks.*,products.`name`,products.`subtype` FROM stocks ,products where stocks.product_id=products.id;";
+        $sql = "SELECT  stocks.*,rawMaterials.`name`,rawMaterials.`subtype` FROM stocks ,rawMaterials where stocks.rawMaterial_id=rawMaterials.id;";
         $result = $this->conn->query($sql);
         while($row = mysqli_fetch_assoc($result)){
             $row['id'] = (int) $row['id'];
@@ -45,8 +45,8 @@ class Stock extends Model
             $row['thickness'] = $row['thickness'];
             $row['merchant_id'] = (int) $row['merchant_id'];
             $originalDate = $row['dop'];
-            $row['productName'] = $row['name'];
-            $row['productSubtype'] = $row['subtype'];
+            $row['rawMaterialName'] = $row['name'];
+            $row['rawMaterialSubtype'] = $row['subtype'];
             $row['dop']  = date("d/m/yy", strtotime($originalDate));
             $json[] = $row;
         }
@@ -54,7 +54,7 @@ class Stock extends Model
     }
 
     function insert($data){
-        $sql = "INSERT INTO stocks (`weight`, `price`, `quantity`, `width`, `height`, `thickness`, `merchant_id`, `product_id`,`dop`) VALUES ('".$data['weight']."', '".$data['price']."', '".$data['quantity']."', '".$data['width']."', '".$data['height']."', '".$data['thickness']."', '".$data['merchant_id']."', '".$data['product_id']."', '".$data['dop']."')";
+        $sql = "INSERT INTO stocks (`weight`, `price`, `quantity`, `width`, `height`, `thickness`, `merchant_id`, `rawMaterial_id`,`dop`) VALUES ('".$data['weight']."', '".$data['price']."', '".$data['quantity']."', '".$data['width']."', '".$data['height']."', '".$data['thickness']."', '".$data['merchant_id']."', '".$data['rawMaterial_id']."', '".$data['dop']."')";
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
@@ -66,7 +66,7 @@ class Stock extends Model
     }
 
     function show($id){
-        $sql = "SELECT stocks.*,products.* FROM stocks,products WHERE stocks.id='$id' and stocks.product_id=products.id;";
+        $sql = "SELECT stocks.*,rawMaterials.* FROM stocks,rawMaterials WHERE stocks.id='$id' and stocks.rawMaterial_id=rawMaterials.id;";
         
         $result = $this->conn->query($sql);
 
@@ -80,8 +80,8 @@ class Stock extends Model
             $row['height'] = $row['height'];
             $row['thickness'] = $row['thickness'];
             $row['merchant_id'] = (int) $row['merchant_id'];
-            $row['productName'] = $row['name'];
-            $row['productSubtype'] = $row['subtype'];
+            $row['rawMaterialName'] = $row['name'];
+            $row['rawMaterialSubtype'] = $row['subtype'];
             $originalDate = $row['dop'];
             $row['dop']  = date("d/m/yy", strtotime($originalDate));
             $this->conn->close();
@@ -93,7 +93,7 @@ class Stock extends Model
     }
 
     function update($data){
-        $sql = "UPDATE stocks SET weight='".$data['weight']."', price='".$data['price']."', quantity='".$data['quantity']."',width='".$data['width']."',height='".$data['height']."',thickness='".$data['thickness']."', product_id='".$data['product_id']."', merchant_id ='".$data['merchant_id']."', dop ='".$data['dop']."' WHERE id=".$data["id"];
+        $sql = "UPDATE stocks SET weight='".$data['weight']."', price='".$data['price']."', quantity='".$data['quantity']."',width='".$data['width']."',height='".$data['height']."',thickness='".$data['thickness']."', rawMaterial_id='".$data['rawMaterial_id']."', merchant_id ='".$data['merchant_id']."', dop ='".$data['dop']."' WHERE id=".$data["id"];
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();

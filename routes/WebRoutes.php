@@ -9,11 +9,11 @@ require_once __DIR__ . '/../controllers/LoginController.php';
 require_once __DIR__ . '/../controllers/ProfileController.php';
 require_once __DIR__ . '/../controllers/CustomerController.php';
 require_once __DIR__ . '/../controllers/StockController.php';
-require_once __DIR__ . '/../controllers/ProductController.php';
+require_once __DIR__ . '/../controllers/RawMaterialController.php';
 require_once __DIR__ . '/../controllers/TableController.php';
 require_once __DIR__ . '/../controllers/MerchantController.php';
-require_once __DIR__ . '/../controllers/ItemsSoldController.php';
-require_once __DIR__ . '/../controllers/ItemsSolddController.php';
+require_once __DIR__ . '/../controllers/PlasmaController.php';
+require_once __DIR__ . '/../controllers/RouterController.php';
 require_once __DIR__ . '/../controllers/MachineTypeController.php';
 require_once __DIR__ . '/../controllers/MachineConsumableController.php';
 
@@ -63,23 +63,23 @@ class WebRoutes extends Route
             case 'stocks':
                 StockController::index();
                 break;
-            case 'products':
-                ProductController::index();
+            case 'rawMaterials':
+                RawMaterialController::index();
                 break;
             case 'merchants':
                 MerchantController::index();
                 break;
-            case 'items_sold':
-                ItemsSoldController::index();
+            case 'plasma':
+                PlasmaController::index();
                 break;
-            case 'items_soldd':
-                ItemsSolddController::index();
+            case 'router':
+                RouterController::index();
                 break;
             case 'machineType':
-                ItemsSoldController::index();
+                PlasmaController::index();
                 break;
             case 'machineConsumable':
-                ItemsSoldController::index();
+                PlasmaController::index();
                 break;
             case 'login':
                 header('Location: /');

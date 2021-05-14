@@ -2,19 +2,23 @@
 
 require_once 'Model.php';
 
-class ItemsSold extends Model
+class Plasma extends Model
 {
     function count()
     {
-        $sql = "SELECT * FROM sold_items;";
+        $dateNow=date("Y-m-d");
+        $sql = "SELECT * FROM plasma where dos > '".$dateNow."';";
         $result = $this->conn->query($sql);
+        
+        $sqll = "SELECT * FROM router where dos > '".$dateNow."';";
+        $resultt = $this->conn->query($sqll);
 
-        return $result->num_rows;
+        return ($result->num_rows)+ ($resultt->num_rows);
     }
     function getById($data)
     {   
         $json = [];
-        $sql = "SELECT * FROM sold_items WHERE id=". $data["id"];
+        $sql = "SELECT * FROM plasma WHERE id=". $data["id"];
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
@@ -24,7 +28,7 @@ class ItemsSold extends Model
     function get()
     {
         $json = [];
-        $sql = "SELECT * FROM sold_items;";
+        $sql = "SELECT * FROM plasma;";
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
@@ -38,7 +42,7 @@ class ItemsSold extends Model
         $dateNow=date("Y-m-d");
         $dateMonthAgo=date('Y-m-d',strtotime('-30 days',strtotime(date("Y-m-d"))));
         $json = [];
-        $sql = "SELECT SUM(price) as price ,SUM(cost) as cost ,dos FROM sold_items where dos < '".$dateNow."' AND dos> '".$dateMonthAgo."' group by dos order by dos ASC;";
+        $sql = "SELECT SUM(price) as price ,SUM(cost) as cost ,dos FROM plasma where dos < '".$dateNow."' AND dos> '".$dateMonthAgo."' group by dos order by dos ASC;";
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
@@ -79,7 +83,7 @@ class ItemsSold extends Model
             $jsonnn[0]['quantity'] - $data['nozzle'] >= 0 &&
             $jsonnnn[0]['quantity'] - $data['shield'] >= 0
         ) {
-            $sqll = "INSERT INTO sold_items (`name`,`electrode`,`nozzle`,`shield`,`machineType_id`,`stock_id`,`stockQuantity`, `customer_id`, `employee_id`,`fuelprice`,`cost`, `price`, `dos`) VALUES ('" . $data['name'] . "','" . $data['electrode'] . "','" . $data['nozzle'] . "','" . $data['shield'] . "',3,'" . $data['stock_id'] . "','" . $data['stockQuantity'] . "','" . $data['customer_id'] . "', '" . $data['employee_id'] . "', '" . $data['fuelPrice'] . "','".(($json[0]['price']*$data['stockQuantity'])+($jsonnnn[0]['price'] * $data['shield'])+($jsonnn[0]['price'] * $data['nozzle'])+($jsonn[0]['price'] * $data['electrode'])+$data['fuelPrice'] )."', '" . $data['price'] . "', '" . $data['dos'] . "');";
+            $sqll = "INSERT INTO plasma (`name`,`electrode`,`nozzle`,`shield`,`machineType_id`,`stock_id`,`stockQuantity`, `customer_id`, `employee_id`,`fuelprice`,`cost`, `price`, `dos`) VALUES ('" . $data['name'] . "','" . $data['electrode'] . "','" . $data['nozzle'] . "','" . $data['shield'] . "',3,'" . $data['stock_id'] . "','" . $data['stockQuantity'] . "','" . $data['customer_id'] . "', '" . $data['employee_id'] . "', '" . $data['fuelPrice'] . "','".(($json[0]['price']*$data['stockQuantity'])+($jsonnnn[0]['price'] * $data['shield'])+($jsonnn[0]['price'] * $data['nozzle'])+($jsonn[0]['price'] * $data['electrode'])+$data['fuelPrice'] )."', '" . $data['price'] . "', '" . $data['dos'] . "');";
             if ($this->conn->query($sqll) === TRUE) {
                 $ssql = "UPDATE stocks SET quantity=quantity-'" . $data['stockQuantity'] . "' WHERE id=" . $data["stock_id"];
                 $this->conn->query($ssql);
@@ -106,7 +110,7 @@ class ItemsSold extends Model
 
     function show($id)
     {
-        $sql = "SELECT * FROM sold_items WHERE id='$id';";
+        $sql = "SELECT * FROM plasma WHERE id='$id';";
         $result = $this->conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -122,13 +126,13 @@ class ItemsSold extends Model
     function update($data)
     {
         $json = [];
-        $sql = "SELECT electrode,nozzle,shield FROM sold_items WHERE id=" . $data["id"];
+        $sql = "SELECT electrode,nozzle,shield FROM plasma WHERE id=" . $data["id"];
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
         }
         $jjjson = [];
-        $sql = "SELECT stockQuantity FROM sold_items WHERE id=" . $data["id"];
+        $sql = "SELECT stockQuantity FROM plasma WHERE id=" . $data["id"];
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $jjjson[] = $row;
@@ -140,7 +144,7 @@ class ItemsSold extends Model
             $jjson[] = $row;
         }
         $jsonn = [];
-        $sqlll = "SELECT quantity,price FROM machineconsumable where name='Electrode'";
+        $sqlll = "SELECT quantity,price FROM machineconsumable where name='electrode'";
         $result = $this->conn->query($sqlll);
         while ($row = mysqli_fetch_assoc($result)) {
             $jsonn[] = $row;
@@ -163,7 +167,7 @@ class ItemsSold extends Model
             $jsonnn[0]['quantity'] - $data['nozzle'] >= 0 &&
             $jsonnnn[0]['quantity'] - $data['shield'] >= 0
         ) {
-            $sql = "UPDATE sold_items SET name='" . $data['name'] . "',electrode='" . $data['electrode'] . "',nozzle='" . $data['nozzle'] . "',shield='" . $data['shield'] . "',machineType_id=3,stock_id='" . $data['stock_id'] . "',stockQuantity='" . $data['stockQuantity'] . "', customer_id='" . $data['customer_id'] . "', employee_id='" . $data['employee_id'] . "', fuelprice='" . $data['fuelPrice'] . "',cost='".(($jjson[0]['price']*$data['stockQuantity'])+($jsonnnn[0]['price'] * $data['shield'])+($jsonnn[0]['price'] * $data['nozzle'])+($jsonn[0]['price'] * $data['electrode'])+$data['fuelPrice'] )."', price='" . $data['price'] . "', dos='" . $data['dos'] . "' WHERE id=" . $data["id"];
+            $sql = "UPDATE plasma SET name='" . $data['name'] . "',electrode='" . $data['electrode'] . "',nozzle='" . $data['nozzle'] . "',shield='" . $data['shield'] . "',machineType_id=3,stock_id='" . $data['stock_id'] . "',stockQuantity='" . $data['stockQuantity'] . "', customer_id='" . $data['customer_id'] . "', employee_id='" . $data['employee_id'] . "', fuelprice='" . $data['fuelPrice'] . "',cost='".(($jjson[0]['price']*$data['stockQuantity'])+($jsonnnn[0]['price'] * $data['shield'])+($jsonnn[0]['price'] * $data['nozzle'])+($jsonn[0]['price'] * $data['electrode'])+$data['fuelPrice'] )."', price='" . $data['price'] . "', dos='" . $data['dos'] . "' WHERE id=" . $data["id"];
             if ($data['stockQuantity'] > $jjjson[0]['stockQuantity'])
                 $ssql = "UPDATE stocks SET quantity=quantity-'" . ($data['stockQuantity'] - $jjjson[0]['stockQuantity']) . "' WHERE id=" . $data["stock_id"];
             else
@@ -200,7 +204,7 @@ class ItemsSold extends Model
 
     function delete($id)
     {
-        $sql = "DELETE FROM sold_items WHERE id='$id'";
+        $sql = "DELETE FROM plasma WHERE id='$id'";
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();

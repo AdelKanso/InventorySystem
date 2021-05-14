@@ -11,9 +11,9 @@ class PrintController extends Controller
     }
     public static function get()
     {
-        $operation = new ItemsSoldd();
+        $operation = new Router();
         $operations = $operation->get();
-        $operationn = new ItemsSold();
+        $operationn = new Plasma();
         $operationn = $operationn->get();
         $data['data'] = $operations;
         $data['dataa']= $operationn;
@@ -21,7 +21,7 @@ class PrintController extends Controller
     }
     public static function getById($data)
     {
-        $operation = new ItemsSoldd();
+        $operation = new Router();
         $operation = $operation->getById($data);
         $stock = new Stock();
         $stock = $stock->show($operation['stock_id']);
@@ -43,7 +43,7 @@ class PrintController extends Controller
     }
     public static function getByIdd($data)
     {
-        $operation = new ItemsSold();
+        $operation = new Plasma();
         $operation = $operation->getById($data);
         $stock = new Stock();
         $stock = $stock->show($operation['stock_id']);

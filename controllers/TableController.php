@@ -10,19 +10,19 @@ class TableController extends Controller
     {
         $customers = new Customer();
         $customers = $customers->count();
-        $operations = new ItemsSold();
+        $operations = new Plasma();
         $operations = $operations->count();
         $consumables = new MachineConsumable();
         $consumables = $consumables->countElectrode();
         $consumabless = new MachineConsumable();
         $consumabless = $consumabless->countNozzle();
-        $sold_item = new ItemsSold();
-        $sold_items = $sold_item->getGraph();
-        $soldd_item = new ItemsSoldd();
-        $soldd_items = $soldd_item->getGraph();
+        $plasma = new Plasma();
+        $plasmas = $plasma->getGraph();
+        $router = new Router();
+        $routers = $router->getGraph();
         $calendar = new Calendar();
         $calendars = $calendar->get();
-        $data['data'] = ['operations' => $operations, 'customers' => $customers,  'consumables' => $consumables, 'consumabless' => $consumabless, 'solditems' => $sold_items, 'soldditems' => $soldd_items, 'calendars' => $calendars];
+        $data['data'] = ['operations' => $operations, 'customers' => $customers,  'consumables' => $consumables, 'consumabless' => $consumabless, 'plasmas' => $plasmas, 'routers' => $routers, 'calendars' => $calendars];
         header('Content-type: application/json');
         echo json_encode($data);
     }

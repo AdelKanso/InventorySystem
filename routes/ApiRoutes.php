@@ -7,10 +7,10 @@ require_once __DIR__ . '/../controllers/LoginController.php';
 require_once __DIR__ . '/../controllers/TableController.php';
 require_once __DIR__ . '/../controllers/UserController.php';
 require_once __DIR__ . '/../controllers/EmployeeController.php';
-require_once __DIR__ . '/../controllers/ProductController.php';
+require_once __DIR__ . '/../controllers/RawMaterialController.php';
 require_once __DIR__ . '/../controllers/StockController.php';
-require_once __DIR__ . '/../controllers/ItemsSoldController.php';
-require_once __DIR__ . '/../controllers/ItemsSolddController.php';
+require_once __DIR__ . '/../controllers/PlasmaController.php';
+require_once __DIR__ . '/../controllers/RouterController.php';
 require_once __DIR__ . '/../controllers/MachineTypeController.php';
 require_once __DIR__ . '/../controllers/MachineConsumableController.php';
 require_once __DIR__ . '/../controllers/CalendarController.php';
@@ -103,15 +103,15 @@ class ApiRoutes extends Route
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'products':
+            case 'rawMaterials':
                 if (self::$method == 'GET')
-                    ProductController::get();
+                    RawMaterialController::get();
                 else if (self::$method == 'POST')
-                    ProductController::insert(self::$data);
+                    RawMaterialController::insert(self::$data);
                 else if (self::$method == 'PATCH')
-                    ProductController::update(self::$data);
+                    RawMaterialController::update(self::$data);
                 else if (self::$method == 'DELETE')
-                    ProductController::delete(self::$data['id']);
+                    RawMaterialController::delete(self::$data['id']);
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
@@ -163,27 +163,27 @@ class ApiRoutes extends Route
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'items_sold':
+            case 'plasma':
                 if (self::$method == 'GET')
-                    ItemsSoldController::get();
+                    PlasmaController::get();
                 else if (self::$method == 'POST')
-                    ItemsSoldController::insert(self::$data);
+                    PlasmaController::insert(self::$data);
                 else if (self::$method == 'PATCH')
-                    ItemsSoldController::update(self::$data);
+                    PlasmaController::update(self::$data);
                 else if (self::$method == 'DELETE')
-                    ItemsSoldController::delete(self::$data['id']);
+                    PlasmaController::delete(self::$data['id']);
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'items_soldd':
+            case 'router':
                 if (self::$method == 'GET')
-                    ItemsSolddController::get();
+                    RouterController::get();
                 else if (self::$method == 'POST')
-                    ItemsSolddController::insert(self::$data);
+                    RouterController::insert(self::$data);
                 else if (self::$method == 'PATCH')
-                    ItemsSolddController::update(self::$data);
+                    RouterController::update(self::$data);
                 else if (self::$method == 'DELETE')
-                    ItemsSolddController::delete(self::$data['id']);
+                    RouterController::delete(self::$data['id']);
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
@@ -196,15 +196,15 @@ class ApiRoutes extends Route
                 } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'items_sold_info':
+            case 'plasma_info':
                 if (self::$method == 'GET')
-                    ItemsSoldController::info();
+                    PlasmaController::info();
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'items_soldd_info':
+            case 'router_info':
                 if (self::$method == 'GET')
-                    ItemsSolddController::info();
+                    RouterController::info();
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;

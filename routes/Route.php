@@ -2,7 +2,7 @@
 
 class Route
 {
-    public function view($path){
+    public static function view($path){
         include_once __DIR__ . '/../views/' . $path;
     }
 

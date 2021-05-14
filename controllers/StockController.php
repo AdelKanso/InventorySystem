@@ -2,7 +2,7 @@
 
 require_once 'Controller.php';
 require_once __DIR__ . '/../model/Stock.php';
-require_once __DIR__ . '/../model/Product.php';
+require_once __DIR__ . '/../model/RawMaterial.php';
 require_once __DIR__ . '/../model/Merchant.php';
 require_once __DIR__ . '/../helpers/ValidateParams.php';
 
@@ -20,9 +20,9 @@ class StockController extends Controller
         $stock = new Stock();
         $stocks = $stock->get();
         foreach ($stocks as $stock) {
-            $product = new Product();
-            $product = $product->show($stock['product_id']);
-            $stock['product'] =  $product;
+            $rawMaterial = new RawMaterial();
+            $rawMaterial = $rawMaterial->show($stock['rawMaterial_id']);
+            $stock['rawMaterial'] =  $rawMaterial;
             $merchant = new Merchant();
             $merchant = $merchant->show($stock['merchant_id']);
             $stock['merchant'] =  $merchant;
@@ -44,7 +44,7 @@ class StockController extends Controller
             http_response_code(422);
             echo json_encode($d);
         } else {
-            $data['data'] = ['weight' => $stock['weight'], 'price' => $stock['price'], 'quantity' => $stock['quantity'], 'width' => $stock['width'], 'height' => $stock['height'], 'thickness' => $stock['thickness'], 'merchant_id' => $stock['merchant_id'], 'product_id' => $stock['product_id'], 'dop' => $stock['dop']];
+            $data['data'] = ['weight' => $stock['weight'], 'price' => $stock['price'], 'quantity' => $stock['quantity'], 'width' => $stock['width'], 'height' => $stock['height'], 'thickness' => $stock['thickness'], 'merchant_id' => $stock['merchant_id'], 'rawMaterial_id' => $stock['rawMaterial_id'], 'dop' => $stock['dop']];
 
             header('Content-type: application/json');
             echo json_encode($data);
@@ -56,9 +56,9 @@ class StockController extends Controller
         $stock = new Stock();
         $result = true;
         $d = [];
-        if (!ValidateParams::validateInteger($data['product_id'])) {
+        if (!ValidateParams::validateInteger($data['rawMaterial_id'])) {
             $result = false;
-            $d['product_id'] = ['The product  id must be a integer value'];
+            $d['rawMaterial_id'] = ['The rawMaterial  id must be a integer value'];
         }
         if (!ValidateParams::validateInteger($data['merchant_id'])) {
             $result = false;
@@ -153,11 +153,11 @@ class StockController extends Controller
 
     public static function info()
     {
-        $product = new Product();
-        $products = $product->get();
+        $rawMaterial = new RawMaterial();
+        $rawMaterials = $rawMaterial->get();
         $merchant = new Merchant();
         $merchants = $merchant->get();
-        $data['data']['products'] = $products;
+        $data['data']['rawMaterials'] = $rawMaterials;
         $data['data']['merchants'] = $merchants;
         echo json_encode($data);
     }

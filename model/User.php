@@ -11,7 +11,7 @@ class User extends Model{
             $row = $result->fetch_assoc();
             session_start();
             $_SESSION['id'] = $row['employee_id'];
-            $_SESSION['admin'] = $row['admin'];
+            $_SESSION['role'] = $row['role'];
             $this->conn->close();
             return true;
         } else {
@@ -32,7 +32,7 @@ class User extends Model{
     }
 
     function insert($data){
-        $sql = "INSERT INTO users (`employee_id`, `email`, `password`, `admin`) VALUES ('".$data['emp_id']."', '".$data['email']."', 'secret', '".$data['admin']."')";
+        $sql = "INSERT INTO users (`employee_id`, `email`, `password`, `role`) VALUES ('".$data['emp_id']."', '".$data['email']."', 'secret', '".$data['role']."')";
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
@@ -72,7 +72,7 @@ class User extends Model{
     }
 
     function update($data){
-        $sql = "UPDATE users SET email='".$data['email']."', admin='".$data['admin']."' WHERE id=".$data["id"];
+        $sql = "UPDATE users SET email='".$data['email']."', role='".$data['role']."' WHERE id=".$data["id"];
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();

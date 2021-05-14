@@ -1,13 +1,13 @@
 <?php
 require_once 'Controller.php';
-require_once __DIR__ . '/../model/ItemsSold.php';
+require_once __DIR__ . '/../model/Plasma.php';
 require_once __DIR__ . '/../model/Stock.php';
 require_once __DIR__ . '/../model/Employee.php';
 require_once __DIR__ . '/../model/Customer.php';
 require_once __DIR__ . '/../helpers/ValidateParams.php';
 
 
-class ItemsSoldController extends Controller
+class PlasmaController extends Controller
 {
     public static function index()
     {
@@ -16,46 +16,43 @@ class ItemsSoldController extends Controller
     }
     public static function get()
     {
-        $sold_item = new ItemsSold();
-        $sold_items = $sold_item->get();
-        foreach ($sold_items as $sold_item) {
+        $plasma = new Plasma();
+        $plasmas = $plasma->get();
+        foreach ($plasmas as $plasma) {
             $stock = new Stock();
-            $stock = $stock->show($sold_item['stock_id']);
-            $sold_item['stock'] =  $stock;
+            $stock = $stock->show($plasma['stock_id']);
+            $plasma['stock'] =  $stock;
             $customer = new Customer();
-            $customer = $customer->show($sold_item['customer_id']);
-            $sold_item['customer'] =  $customer;
+            $customer = $customer->show($plasma['customer_id']);
+            $plasma['customer'] =  $customer;
             $employee = new Employee();
-            $employee = $employee->show($sold_item['employee_id']);
-            $sold_item['employee'] =  $employee;
-            //$machineType = new MachineType();
-            //$machineType = $machineType->show($sold_item['machineType_id']);
-            //$sold_item['machineType'] =  $machineType;
-            array_shift($sold_items);
-            array_push($sold_items, $sold_item);
+            $employee = $employee->show($plasma['employee_id']);
+            $plasma['employee'] =  $employee;
+            array_shift($plasmas);
+            array_push($plasmas, $plasma);
         }
 
-        $data['data'] = $sold_items;
+        $data['data'] = $plasmas;
         echo json_encode($data);
     }
     public static function show($id)
     {
-        $sold_item = new ItemsSold();
-        $sold_item = $sold_item->show($id);
-        if ($sold_item == false) {
+        $plasma = new Plasma();
+        $plasma = $plasma->show($id);
+        if ($plasma == false) {
             $d = ['items_sold' => ['No stock found with this id.']];
             header('Content-type: application/json');
             http_response_code(422);
             echo json_encode($d);
         } else {
-            $data['data'] = ['name' => $sold_item['name']/*, 'machineType_id' => $sold_item['machineType_id']*/, 'stock_id' => $sold_item['stock_id'], 'customer_id' => $sold_item['customer_id'], 'employee_id' => $sold_item['employee_id'], 'price' => $sold_item['price'], 'dos' => $sold_item['dos']];
+            $data['data'] = ['name' => $plasma['name'], 'stock_id' => $plasma['stock_id'], 'customer_id' => $plasma['customer_id'], 'employee_id' => $plasma['employee_id'], 'price' => $plasma['price'], 'dos' => $plasma['dos']];
             header('Content-type: application/json');
             echo json_encode($data);
         }
     }
     public static function insert($data)
     {
-        $sold_item = new ItemsSold();
+        $plasma = new Plasma();
         $result = true;
         $d = [];
 
@@ -75,9 +72,13 @@ class ItemsSoldController extends Controller
             $result = false;
             $d['dos'] = ['The date must be in valid format(Y-m-d H:i:s).'];
         }
+        if (!ValidateParams::validateInteger($data['fuelPrice'])) {
+            $result = false;
+            $d['stock_id'] = ['The fuel cost must be a integer value'];
+        }
         if ($result == true) {
-            $sold_item = $sold_item->insert($data);
-            if ($sold_item == false) {
+            $plasma = $plasma->insert($data);
+            if ($plasma == false) {
                 $d = ['items_sold' => ['There was an error inserting operation.']];
                 header('Content-type: application/json');
                 http_response_code(422);
@@ -95,7 +96,7 @@ class ItemsSoldController extends Controller
     }
     public static function update($data)
     {
-        $sold_item = new ItemsSold();
+        $plasma = new Plasma();
         $result = true;
         $d = [];
         if (!ValidateParams::validateInteger($data['stock_id'])) {
@@ -118,9 +119,13 @@ class ItemsSoldController extends Controller
             $result = false;
             $d['dos'] = ['The date must be in valid format(Y-m-d H:i:s).'];
         }
+        if (!ValidateParams::validateInteger($data['fuelPrice'])) {
+            $result = false;
+            $d['stock_id'] = ['The fuel cost must be a integer value'];
+        }
         if ($result == true) {
-            $sold_item = $sold_item->update($data);
-            if ($sold_item == false) {
+            $plasma = $plasma->update($data);
+            if ($plasma == false) {
                 $d = ['items_sold' => ['There was an error updating content.']];
                 header('Content-type: application/json');
                 http_response_code(422);
@@ -138,8 +143,8 @@ class ItemsSoldController extends Controller
     }
     public static function delete($id)
     {
-        $sold_item = new ItemsSold();
-        if ($sold_item->delete($id)) {
+        $plasma = new Plasma();
+        if ($plasma->delete($id)) {
             $d = ['items_sold' => ['Operation has been deleted.']];
             header('Content-type: application/json');
             echo json_encode($d);
@@ -158,12 +163,9 @@ class ItemsSoldController extends Controller
         $customers = $customer->get();
         $employee = new Employee();
         $employees = $employee->get();
-      //  $machineType = new MachineType();
-       // $machineTypes = $machineType->get();
         $data['data']['stocks'] = $stocks;
         $data['data']['customers'] = $customers;
         $data['data']['employees'] = $employees;
-       // $data['data']['machineTypes'] = $machineTypes;
         echo json_encode($data);
     }
 }

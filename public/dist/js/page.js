@@ -331,7 +331,7 @@ $(document).ready(function() {
         $('.page-header').html('Users');
         $('thead tr').append($('<th />', { text: 'Employee' }));
         $('thead tr').append($('<th />', { text: 'Email' }));
-        $('thead tr').append($('<th />', { text: 'Admin' }));
+        $('thead tr').append($('<th />', { text: 'Role' }));
 
         $('#table').on('click', 'tr', function() {
             try {
@@ -353,7 +353,7 @@ $(document).ready(function() {
             "columns": [
                 { "data": "employee.name" },
                 { "data": "email" },
-                { "data": "admin" }
+                { "data": "role" }
             ],
             'bPaginate': false,
             'select': true,
@@ -371,7 +371,7 @@ $(document).ready(function() {
                         d.table = true,
                             d.emp_id = $("#DTE_Field_emp_id").val();
                         d.email = $("#DTE_Field_email").val();
-                        d.admin = $("input[name='admin']:checked").val();
+                        d.role = $("input[name='role']:checked").val();
                         delete d.data;
                         delete d.action;
                     },
@@ -393,7 +393,7 @@ $(document).ready(function() {
                         d.id = row_id;
                         d.emp_id = $("#DTE_Field_emp_id").val();
                         d.email = $("#DTE_Field_email").val();
-                        d.admin = $("input[name='admin']:checked").val();
+                        d.role = $("input[name='role']:checked").val();
                         delete d.data;
                         delete d.action;
                     },
@@ -438,12 +438,13 @@ $(document).ready(function() {
                 label: "Email:",
                 name: "email"
             }, {
-                label: "Admin:",
-                name: "admin",
+                label: "Role:",
+                name: "role",
                 type: "radio",
                 "ipOpts": [
-                    { "label": "Yes", "value": 1 },
-                    { "label": "No", "value": 0 }
+                    { "label": " Admin", "value": 'admin' },
+                    { "label": " Engineer", "value": 'engineer' },
+                    { "label": " Accountant", "value": 'accountant' }
                 ]
             }],
             i18n: {
@@ -649,9 +650,9 @@ $(document).ready(function() {
         table.buttons().container()
             .appendTo($('.col-sm-6:eq(0)', table.table().container()));
 
-    } else if (location.pathname == '/products') {
+    } else if (location.pathname == '/rawMaterials') {
 
-        $('.page-header').html('Products');
+        $('.page-header').html('RawMaterials');
 
         $('thead tr').append($('<th />', { text: 'Name' }));
         $('thead tr').append($('<th />', { text: 'Subtype' }));
@@ -659,8 +660,8 @@ $(document).ready(function() {
         $('#table').on('click', 'tr', function() {
             try {
                 row_id = table.row(this).data().id;
-                editor.s.ajax.edit.url = '/api/products';
-                editor.s.ajax.remove.url = '/api/products';
+                editor.s.ajax.edit.url = '/api/rawMaterials';
+                editor.s.ajax.remove.url = '/api/rawMaterials';
             } catch (e) {
 
             }
@@ -670,7 +671,7 @@ $(document).ready(function() {
             "autoWidth": true,
             'responsive': true,
             "ajax": {
-                "url": "/api/products",
+                "url": "/api/rawMaterials",
                 "type": "GET",
             },
             "columns": [
@@ -688,7 +689,7 @@ $(document).ready(function() {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/api/products',
+                    url: '/api/rawMaterials',
                     data: function(d) {
                         d.name = $("#DTE_Field_name").val();
                         d.subtype = $("#DTE_Field_subtype").val();
@@ -697,7 +698,7 @@ $(document).ready(function() {
                     },
                     success: function() {
                         table.ajax.reload();
-                        $.notify('New product added.', 'success');
+                        $.notify('New rawMaterial added.', 'success');
                     },
                     error: function(response) {
                         var json = $.parseJSON(response.responseText);
@@ -708,7 +709,7 @@ $(document).ready(function() {
                 },
                 edit: {
                     type: 'PATCH',
-                    url: '/api/products',
+                    url: '/api/rawMaterials',
                     data: function(d) {
                         d.id = row_id;
                         d.name = $("#DTE_Field_name").val();
@@ -717,7 +718,7 @@ $(document).ready(function() {
                         delete d.action;
                     },
                     success: function() {
-                        $.notify('Product updated.', 'success');
+                        $.notify('RawMaterial updated.', 'success');
                         table.ajax.reload();
                     },
                     error: function(response) {
@@ -729,14 +730,14 @@ $(document).ready(function() {
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/api/products',
+                    url: '/api/rawMaterials',
                     data: function(d) {
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
                     },
                     success: function() {
-                        $.notify('Product has been trashed.', 'success');
+                        $.notify('RawMaterial has been trashed.', 'success');
                         table.ajax.reload();
                     },
                     error: function(response) {
@@ -760,13 +761,13 @@ $(document).ready(function() {
             }],
             i18n: {
                 create: {
-                    title: "Add Product"
+                    title: "Add RawMaterial"
                 },
                 edit: {
-                    title: "Edit Product"
+                    title: "Edit RawMaterial"
                 },
                 remove: {
-                    title: "Trash Product"
+                    title: "Trash RawMaterial"
                 }
             }
         });
@@ -779,7 +780,7 @@ $(document).ready(function() {
                 className: 'btn btn-danger btn-outline Btn',
                 editor: editor,
                 formMessage: function(e, dt) {
-                    return 'Are you sure you want to trash the product?';
+                    return 'Are you sure you want to trash the rawMaterial?';
                 }
             }
         ]);
@@ -1122,7 +1123,7 @@ $(document).ready(function() {
 
         $('.page-header').html('Stock');
 
-        $('thead tr').append($('<th />', { text: 'Product' }));
+        $('thead tr').append($('<th />', { text: 'RawMaterial' }));
         $('thead tr').append($('<th />', { text: 'Merchant' }));
         $('thead tr').append($('<th />', { text: 'Weight' }));
         $('thead tr').append($('<th />', { text: 'Width' }));
@@ -1151,12 +1152,12 @@ $(document).ready(function() {
             "columns": [{
                     data: null,
                     render: function(data, type, row) {
-                        if (data.product.subtype == "") {
-                            return data.product.name;
+                        if (data.rawMaterial.subtype == "") {
+                            return data.rawMaterial.name;
                         }
-                        return data.product.name + ', ' + data.product.subtype;
+                        return data.rawMaterial.name + ', ' + data.rawMaterial.subtype;
                     },
-                    editField: ['product.name', 'product.subtype']
+                    editField: ['rawMaterial.name', 'rawMaterial.subtype']
                 },
                 { "data": "merchant.name" },
                 { "data": "weight" },
@@ -1180,7 +1181,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/stocks',
                     data: function(d) {
-                        d.product_id = $("#DTE_Field_product_id").val();
+                        d.rawMaterial_id = $("#DTE_Field_rawMaterial_id").val();
                         d.merchant_id = $("#DTE_Field_merchant_id").val();
                         d.weight = $("#DTE_Field_weight").val();
                         d.price = $("#DTE_Field_price").val();
@@ -1208,7 +1209,7 @@ $(document).ready(function() {
                     url: '/api/stocks',
                     data: function(d) {
                         d.id = row_id;
-                        d.product_id = $("#DTE_Field_product_id").val();
+                        d.rawMaterial_id = $("#DTE_Field_rawMaterial_id").val();
                         d.merchant_id = $("#DTE_Field_merchant_id").val();
                         d.weight = $("#DTE_Field_weight").val();
                         d.price = $("#DTE_Field_price").val();
@@ -1254,8 +1255,8 @@ $(document).ready(function() {
             table: "#table",
             'idSrc': 'id',
             fields: [{
-                label: "Product:",
-                name: "product_id",
+                label: "RawMaterial:",
+                name: "rawMaterial_id",
                 type: "select"
             }, {
                 label: "Merchant:",
@@ -1326,25 +1327,25 @@ $(document).ready(function() {
             data: {},
             success: function(response) {
                 response = $.parseJSON(response);
-                var stock_product = [];
+                var stock_rawMaterial = [];
                 var stock_merchant = [];
-                var products = response['data']['products'];
+                var rawMaterials = response['data']['rawMaterials'];
                 var merchants = response['data']['merchants'];
 
-                for (var i = 0; i < products.length; i++) {
-                    stock_product.push({ label: products[i]['name'] + ' - ' + products[i]['subtype'], value: products[i]['id'] });
+                for (var i = 0; i < rawMaterials.length; i++) {
+                    stock_rawMaterial.push({ label: rawMaterials[i]['name'] + ' - ' + rawMaterials[i]['subtype'], value: rawMaterials[i]['id'] });
                 }
 
                 for (var i = 0; i < merchants.length; i++) {
                     stock_merchant.push({ label: merchants[i]['id'] + ' - ' + merchants[i]['name'], value: merchants[i]['id'] });
                 }
 
-                editor.field('product_id').update(stock_product);
+                editor.field('rawMaterial_id').update(stock_rawMaterial);
                 editor.field('merchant_id').update(stock_merchant);
 
             },
             error: function() {
-                $.notify('There was an error fetching product & merchant data.');
+                $.notify('There was an error fetching rawMaterial & merchant data.');
             }
         });
 
@@ -1364,14 +1365,13 @@ $(document).ready(function() {
         table.buttons().container()
             .appendTo($('.col-sm-6:eq(0)', table.table().container()));
 
-    } else if (location.pathname == '/items_sold') {
+    } else if (location.pathname == '/plasma') {
 
         $('.page-header').html('Plasma Operations');
         $('thead tr').append($('<th />', { text: 'Name' }));
         $('thead tr').append($('<th />', { text: 'Electrode' }));
         $('thead tr').append($('<th />', { text: 'Nozzle' }));
         $('thead tr').append($('<th />', { text: 'Shield' }));
-        //$('thead tr').append($('<th />', { text: 'Machine Type' }));
         $('thead tr').append($('<th />', { text: 'Stock' }));
         $('thead tr').append($('<th />', { text: 'Stock Quantity' }));
         $('thead tr').append($('<th />', { text: 'Customer' }));
@@ -1383,8 +1383,8 @@ $(document).ready(function() {
         $('#table').on('click', 'tr', function() {
             try {
                 row_id = table.row(this).data().id;
-                editor.s.ajax.edit.url = '/api/items_sold';
-                editor.s.ajax.remove.url = '/api/items_sold';
+                editor.s.ajax.edit.url = '/api/plasma';
+                editor.s.ajax.remove.url = '/api/plasma';
             } catch (e) {
 
             }
@@ -1395,7 +1395,7 @@ $(document).ready(function() {
 
             "modalEditor": true,
             "ajax": {
-                "url": "/api/items_sold",
+                "url": "/api/plasma",
                 "type": "GET",
             },
             "columns": [
@@ -1403,13 +1403,12 @@ $(document).ready(function() {
                 { "data": "electrode" },
                 { "data": "nozzle" },
                 { "data": "shield" },
-                // { "data": "machineType.name" },
                 {
                     data: null,
                     render: function(data, type, row) {
-                        return data.stock.productName + ',' + data.stock.productSubtype + ',' + data.stock.width + '*' + data.stock.height + '*' + data.stock.thickness;
+                        return data.stock.rawMaterialName + ',' + data.stock.rawMaterialSubtype + ',' + data.stock.width + '*' + data.stock.height + '*' + data.stock.thickness;
                     },
-                    editField: ['stock.productName', 'stock.productSubtype', 'stock.width', 'stock.height', 'stock.thickness']
+                    editField: ['stock.rawMaterialName', 'stock.rawMaterialSubtype', 'stock.width', 'stock.height', 'stock.thickness']
                 },
                 { "data": "stockQuantity" },
                 {
@@ -1435,13 +1434,12 @@ $(document).ready(function() {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/api/items_sold',
+                    url: '/api/plasma',
                     data: function(d) {
                         d.name = $("#DTE_Field_name").val();
                         d.electrode = $("#DTE_Field_electrode").val();
                         d.nozzle = $("#DTE_Field_nozzle").val();
                         d.shield = $("#DTE_Field_shield").val();
-                        //$("#DTE_Field_machineType_id").val();
                         d.stock_id = $("#DTE_Field_stock_id").val();
                         d.stockQuantity = $("#DTE_Field_stockQuantity").val();
                         d.customer_id = $("#DTE_Field_customer_id").val();
@@ -1465,14 +1463,13 @@ $(document).ready(function() {
                 },
                 edit: {
                     type: 'PATCH',
-                    url: '/api/items_sold',
+                    url: '/api/plasma',
                     data: function(d) {
                         d.id = row_id;
                         d.name = $("#DTE_Field_name").val();
                         d.electrode = $("#DTE_Field_electrode").val();
                         d.nozzle = $("#DTE_Field_nozzle").val();
                         d.shield = $("#DTE_Field_shield").val();
-                        //$("#DTE_Field_machineType_id").val();
                         d.stock_id = $("#DTE_Field_stock_id").val();
                         d.stockQuantity = $("#DTE_Field_stockQuantity").val();
                         d.customer_id = $("#DTE_Field_customer_id").val();
@@ -1488,6 +1485,7 @@ $(document).ready(function() {
                         table.ajax.reload();
                     },
                     error: function(response) {
+                        console.log(response.responseText);
                         var json = $.parseJSON(response.responseText);
                         for (var key in json) {
                             $.notify(json[key]);
@@ -1496,7 +1494,7 @@ $(document).ready(function() {
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/api/items_sold',
+                    url: '/api/plasma',
                     data: function(d) {
                         d.id = row_id;
                         delete d.data;
@@ -1600,41 +1598,34 @@ $(document).ready(function() {
         });
 
         $.ajax({
-            url: '/api/items_sold_info',
+            url: '/api/router_info',
             type: 'GET',
             data: {},
             success: function(response) {
                 response = $.parseJSON(response);
-                var solditem_stock = [];
-                var solditem_customer = [];
-                var solditem_employee = [];
-                // var solditem_machineType = [];
+                var router_stock = [];
+                var router_customer = [];
+                var router_employee = [];
                 var stocks = response['data']['stocks'];
                 var customers = response['data']['customers'];
                 var employees = response['data']['employees'];
-                //  var machineTypes = response['data']['machineTypes'];
                 for (var i = 0; i < stocks.length; i++) {
-                    if (stocks[i]['productSubtype'] == "") {
-                        solditem_stock.push({ label: stocks[i]['productName'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
+                    if (stocks[i]['rawMaterialSubtype'] == "") {
+                        router_stock.push({ label: stocks[i]['rawMaterialName'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
                     } else {
-                        solditem_stock.push({ label: stocks[i]['productName'] + ',' + stocks[i]['productSubtype'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
+                        router_stock.push({ label: stocks[i]['rawMaterialName'] + ',' + stocks[i]['rawMaterialSubtype'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
                     }
                 }
                 for (var i = 0; i < customers.length; i++) {
-                    solditem_customer.push({ label: customers[i]['name'] + ' , ' + customers[i]['phone'], value: customers[i]['id'] });
+                    router_customer.push({ label: customers[i]['name'] + ' , ' + customers[i]['phone'], value: customers[i]['id'] });
                 }
                 for (var i = 0; i < employees.length; i++) {
-                    solditem_employee.push({ label: employees[i]['name'], value: employees[i]['id'] });
+                    router_employee.push({ label: employees[i]['name'], value: employees[i]['id'] });
                 }
-                // for (var i = 0; i < machineTypes.length; i++) {
-                //     solditem_machineType.push({ label: machineTypes[i]['name'], value: machineTypes[i]['id'] });
-                //}
 
-                editor.field('stock_id').update(solditem_stock);
-                editor.field('customer_id').update(solditem_customer);
-                editor.field('employee_id').update(solditem_employee);
-                // editor.field('machineType_id').update(solditem_machineType);
-
+                editor.field('stock_id').update(router_stock);
+                editor.field('customer_id').update(router_customer);
+                editor.field('employee_id').update(router_employee);
             },
             error: function() {
                 $.notify('There was an error fetching additional data.');
@@ -1657,14 +1648,13 @@ $(document).ready(function() {
         table.buttons().container()
             .appendTo($('.col-sm-6:eq(0)', table.table().container()));
 
-    } else if (location.pathname == '/items_soldd') {
+    } else if (location.pathname == '/router') {
 
         $('.page-header').html('Router Operations');
         $('thead tr').append($('<th />', { text: 'Name' }));
         $('thead tr').append($('<th />', { text: 'Tool' }));
         $('thead tr').append($('<th />', { text: 'Collet' }));
         $('thead tr').append($('<th />', { text: 'Tool Holder' }));
-        //$('thead tr').append($('<th />', { text: 'Machine Type' }));
         $('thead tr').append($('<th />', { text: 'Stock' }));
         $('thead tr').append($('<th />', { text: 'Stock Quantity' }));
         $('thead tr').append($('<th />', { text: 'Customer' }));
@@ -1676,8 +1666,8 @@ $(document).ready(function() {
         $('#table').on('click', 'tr', function() {
             try {
                 row_id = table.row(this).data().id;
-                editor.s.ajax.edit.url = '/api/items_soldd';
-                editor.s.ajax.remove.url = '/api/items_soldd';
+                editor.s.ajax.edit.url = '/api/router';
+                editor.s.ajax.remove.url = '/api/router';
             } catch (e) {
 
             }
@@ -1688,7 +1678,7 @@ $(document).ready(function() {
 
             "modalEditor": true,
             "ajax": {
-                "url": "/api/items_soldd",
+                "url": "/api/router",
                 "type": "GET",
             },
             "columns": [
@@ -1696,13 +1686,12 @@ $(document).ready(function() {
                 { "data": "tool" },
                 { "data": "collet" },
                 { "data": "toolholder" },
-                // { "data": "machineType.name" },
                 {
                     data: null,
                     render: function(data, type, row) {
-                        return data.stock.productName + ',' + data.stock.productSubtype + ',' + data.stock.width + '*' + data.stock.height + '*' + data.stock.thickness;
+                        return data.stock.rawMaterialName + ',' + data.stock.rawMaterialSubtype + ',' + data.stock.width + '*' + data.stock.height + '*' + data.stock.thickness;
                     },
-                    editField: ['stock.productName', 'stock.productSubtype', 'stock.width', 'stock.height', 'stock.thickness']
+                    editField: ['stock.rawMaterialName', 'stock.rawMaterialSubtype', 'stock.width', 'stock.height', 'stock.thickness']
                 },
                 { "data": "stockQuantity" },
                 {
@@ -1728,13 +1717,12 @@ $(document).ready(function() {
             ajax: {
                 create: {
                     type: 'POST',
-                    url: '/api/items_soldd',
+                    url: '/api/router',
                     data: function(d) {
                         d.name = $("#DTE_Field_name").val();
                         d.tool = $("#DTE_Field_tool").val();
                         d.collet = $("#DTE_Field_collet").val();
                         d.toolholder = $("#DTE_Field_toolholder").val();
-                        //$("#DTE_Field_machineType_id").val();
                         d.stock_id = $("#DTE_Field_stock_id").val();
                         d.stockQuantity = $("#DTE_Field_stockQuantity").val();
                         d.customer_id = $("#DTE_Field_customer_id").val();
@@ -1758,14 +1746,13 @@ $(document).ready(function() {
                 },
                 edit: {
                     type: 'PATCH',
-                    url: '/api/items_soldd',
+                    url: '/api/router',
                     data: function(d) {
                         d.id = row_id;
                         d.name = $("#DTE_Field_name").val();
                         d.tool = $("#DTE_Field_tool").val();
                         d.collet = $("#DTE_Field_collet").val();
                         d.toolholder = $("#DTE_Field_toolholder").val();
-                        //$("#DTE_Field_machineType_id").val();
                         d.stock_id = $("#DTE_Field_stock_id").val();
                         d.stockQuantity = $("#DTE_Field_stockQuantity").val();
                         d.customer_id = $("#DTE_Field_customer_id").val();
@@ -1789,7 +1776,7 @@ $(document).ready(function() {
                 },
                 remove: {
                     type: 'DELETE',
-                    url: '/api/items_soldd',
+                    url: '/api/router',
                     data: function(d) {
                         d.id = row_id;
                         delete d.data;
@@ -1892,40 +1879,34 @@ $(document).ready(function() {
         });
 
         $.ajax({
-            url: '/api/items_soldd_info',
+            url: '/api/router_info',
             type: 'GET',
             data: {},
             success: function(response) {
                 response = $.parseJSON(response);
-                var soldditem_stock = [];
-                var soldditem_customer = [];
-                var soldditem_employee = [];
-                //var soldditem_machineType = [];
+                var router_stock = [];
+                var router_customer = [];
+                var router_employee = [];
                 var stocks = response['data']['stocks'];
                 var customers = response['data']['customers'];
                 var employees = response['data']['employees'];
-                //var machineTypes = response['data']['machineTypes'];
                 for (var i = 0; i < stocks.length; i++) {
-                    if (stocks[i]['productSubtype'] == "") {
-                        soldditem_stock.push({ label: stocks[i]['productName'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
+                    if (stocks[i]['rawMaterialSubtype'] == "") {
+                        router_stock.push({ label: stocks[i]['rawMaterialName'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
                     } else {
-                        soldditem_stock.push({ label: stocks[i]['productName'] + ',' + stocks[i]['productSubtype'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
+                        router_stock.push({ label: stocks[i]['rawMaterialName'] + ',' + stocks[i]['rawMaterialSubtype'] + ',' + stocks[i]['width'] + '*' + stocks[i]['height'] + '*' + stocks[i]['thickness'], value: stocks[i]['id'] });
                     }
                 }
                 for (var i = 0; i < customers.length; i++) {
-                    soldditem_customer.push({ label: customers[i]['name'] + ' , ' + customers[i]['phone'], value: customers[i]['id'] });
+                    router_customer.push({ label: customers[i]['name'] + ' , ' + customers[i]['phone'], value: customers[i]['id'] });
                 }
                 for (var i = 0; i < employees.length; i++) {
-                    soldditem_employee.push({ label: employees[i]['name'], value: employees[i]['id'] });
+                    router_employee.push({ label: employees[i]['name'], value: employees[i]['id'] });
                 }
-                // for (var i = 0; i < machineTypes.length; i++) {
-                //    soldditem_machineType.push({ label: machineTypes[i]['name'], value: machineTypes[i]['id'] });
-                //}
 
-                editor.field('stock_id').update(soldditem_stock);
-                editor.field('customer_id').update(soldditem_customer);
-                editor.field('employee_id').update(soldditem_employee);
-                //editor.field('machineType_id').update(soldditem_machineType);
+                editor.field('stock_id').update(router_stock);
+                editor.field('customer_id').update(router_customer);
+                editor.field('employee_id').update(router_employee);
 
             },
             error: function() {
@@ -1960,15 +1941,15 @@ $(document).ready(function() {
                 $("#nozzle").text(response['data']['consumabless']);
                 var calendar = [];
                 var calendar = response['data']['calendars'];
-                var solditem = [];
-                var solditem = response['data']['solditems'];
-                var soldditem = [];
-                var soldditem = response['data']['soldditems'];
+                var plasma = [];
+                var plasma = response['data']['plasmas'];
+                var router = [];
+                var router = response['data']['routers'];
 
-                for (var i = 0; i < solditem.length; i++) {
-                    xValue = new Date(solditem[i]['dos']);
-                    yValue = Number(solditem[i]['price']);
-                    yValue2 = Number(solditem[i]['cost']);
+                for (var i = 0; i < plasma.length; i++) {
+                    xValue = new Date(plasma[i]['dos']);
+                    yValue = Number(plasma[i]['price']);
+                    yValue2 = Number(plasma[i]['cost']);
                     dps.push({
                         x: xValue,
                         y: yValue
@@ -1979,11 +1960,11 @@ $(document).ready(function() {
                     });
                 }
                 chart.render();
-                for (var i = 0; i < soldditem.length; i++) {
+                for (var i = 0; i < router.length; i++) {
 
-                    xValue2 = new Date(soldditem[i]['dos']);
-                    y2Value = Number(soldditem[i]['price']);
-                    y2Value2 = Number(soldditem[i]['cost']);
+                    xValue2 = new Date(router[i]['dos']);
+                    y2Value = Number(router[i]['price']);
+                    y2Value2 = Number(router[i]['cost']);
                     dpss.push({
                         x: xValue2,
                         y: y2Value
@@ -2315,7 +2296,7 @@ function getCustomer() {
                 $('#sName').text(operation['name']);
                 $('#sDate').text(operation['dos']);
                 $('#sPrice').text("$" + operation['price']);
-                $('#stName').text(stock['productName'] + "," + stock['productSubtype']);
+                $('#stName').text(stock['rawMaterialName'] + "," + stock['rawMaterialSubtype']);
                 $('#stQuantity').text(operation['stockQuantity']);
                 $('#stPrice').text("$" + stock['price']);
                 $('#conName').text("Tool");
@@ -2359,7 +2340,7 @@ function getCustomer() {
                 $('#sDate').text(operation['dos']);
                 $('#sPrice').text("$" + operation['price']);
                 $('#consumption').text("$" + parseFloat(((parseFloat(operation['price']) - parseFloat(operation['cost'])) * parseFloat(machine['consumptionRate'])) / 100).toFixed(3));
-                $('#stName').text(stock['productName'] + "," + stock['productSubtype']);
+                $('#stName').text(stock['rawMaterialName'] + "," + stock['rawMaterialSubtype']);
                 $('#stQuantity').text(operation['stockQuantity']);
                 $('#stPrice').text("$" + stock['price']);
                 $('#conName').text("Electrode");

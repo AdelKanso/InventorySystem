@@ -9,7 +9,7 @@ class Auth
         return false;
     }
     public static function isAdmin(){
-         if($_SESSION['admin'] == 1)
+         if($_SESSION['role'] == 'admin')
             return true;
         return false;   	
     }

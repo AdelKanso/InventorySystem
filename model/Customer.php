@@ -21,7 +21,7 @@ class Customer extends Model
     }
     function getLatest(){
         $json = [];
-        $sql = "SELECT * FROM customers,sold_items where customers.id=customer_id LIMIT 7;";
+        $sql = "SELECT * FROM customers,plasma where customers.id=customer_id LIMIT 7;";
         $result = $this->conn->query($sql);
         while($row = mysqli_fetch_assoc($result)){
             $row['id'] = (int) $row['id'];
