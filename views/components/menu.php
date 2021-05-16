@@ -8,16 +8,16 @@
             if ($_SESSION['role'] == 'admin'||$_SESSION['role'] == 'accountant'||$_SESSION['role'] == 'engineer') {
             ?>
             <li class="">
-                <a href="/plasma" style="color:#0275d8;font-size: 18px;"><img src="dist/asas.jpg" alt="" width="24" height="20"> Plasma Operations</a>
+                <a href="/plasma" style="color:#0275d8;font-size: 18px;"><img src="dist/images/plasmaImage.jpg" alt="" width="24" height="20"> Plasma Operations</a>
             </li>
             <li class="">
-                <a href="/router" style="color:#0275d8;font-size: 18px;"><img src="dist/asss.png" alt="" width="24" height="20"> Router Operations</a>
+                <a href="/router" style="color:#0275d8;font-size: 18px;"><img src="dist/images/routerImage.png" alt="" width="24" height="20"> Router Operations</a>
             </li>
             <li class="">
                 <a href="/customers" style="color:#0275d8;font-size: 18px;"><i class="fa fa-users fa-fw"></i> Customers</a>
             </li>
             <li class="">
-                <a href="/machineConsumable" style="color:#0275d8;font-size: 18px;"><img src="dist/sparePart.png" width="24" height="20"> Machine Consumables</a>
+                <a href="/machineConsumable" style="color:#0275d8;font-size: 18px;"><img src="dist/images/sparePart.png" width="24" height="20"> Machine Consumables</a>
             </li>
             <li class="">
                 <a href="/stocks" style="color:#0275d8;font-size: 18px;"><i class="fa fa-archive fa-fw"></i> Stock</a>
@@ -35,7 +35,7 @@
             if ($_SESSION['role'] == 'admin'||$_SESSION['role'] == 'accountant') {
             ?>
             <li class="">
-                <a href="/print" style="color:#0275d8;font-size: 18px;"><i class="fa fa-print fa-fw"></i> Invoice</a>
+                <a href="/invoice" style="color:#0275d8;font-size: 18px;"><i class="fa fa-print fa-fw"></i> Invoice</a>
             </li>
             <?php
             }

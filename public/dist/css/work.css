@@ -82,6 +82,7 @@ table#table.dataTable thead:hover {
     height: 213px;
     width: 80%;
     left: 10%;
+    bottom: 0;
 }
 
 #hideTrial {

@@ -1934,6 +1934,7 @@ $(document).ready(function() {
         $.ajax({
             url: '/api/tables',
             type: 'GET',
+            data: {},
             success: function(response) {
                 $("#customers").text(response['data']['customers']);
                 $("#Operations").text(response['data']['operations']);
@@ -1976,10 +1977,8 @@ $(document).ready(function() {
                 }
                 chartt.render();
 
-
-
                 for (var i = 0; i < calendar.length; i++) {
-                    getAllEvent(calendar[i]['dayy'], calendar[i]['monthh'], 2020, calendar[i]['eventDescription']);
+                    getAllEvent(calendar[i]['dayy'], calendar[i]['monthh'], 2021, calendar[i]['eventDescription']);
                 }
                 if ($('#electrode').text() === "") {
                     $('#electrodeBody').css('background-color', '#337ab7');
@@ -2042,9 +2041,9 @@ $(document).ready(function() {
                 $.notify('There was an error fetching data.');
             }
         });
-    } else if (location.pathname == '/print') {
+    } else if (location.pathname == '/invoice') {
         $.ajax({
-            url: '/api/print',
+            url: '/api/invoice',
             type: 'GET',
             success: function(response) {
                 response = $.parseJSON(response);
@@ -2213,13 +2212,13 @@ $(document).ready(function() {
     });
 });
 
-function showService(idd, machineType) {
+function showService(operationId, machineType) {
     if (machineType == 4) {
         $.ajax({
-            url: '/api/print',
+            url: '/api/routerPrint',
             type: 'PATCH',
             data: {
-                id: idd,
+                id: operationId,
             },
             success: function(response) {
                 $('#tablerow').remove();
@@ -2242,10 +2241,10 @@ function showService(idd, machineType) {
         document.getElementById("printBtnn").disabled = false;
     } else if (machineType == 3) {
         $.ajax({
-            url: '/api/printt',
+            url: '/api/plasmaPrint',
             type: 'PATCH',
             data: {
-                id: idd,
+                id: operationId,
             },
             success: function(response) {
                 $('#tablerow').remove();
@@ -2273,10 +2272,10 @@ function showService(idd, machineType) {
     }
 }
 
-function getCustomer() {
+function printInvoice() {
     if ($('#machineType').text() == 4) {
         $.ajax({
-            url: '/api/print',
+            url: '/api/routerPrint',
             type: 'PATCH',
             data: {
                 id: $('#operationId').text(),
@@ -2318,9 +2317,8 @@ function getCustomer() {
         });
     } else if ($('#machineType').text() == 3) {
 
-
         $.ajax({
-            url: '/api/printt',
+            url: '/api/plasmaPrint',
             type: 'PATCH',
             data: {
                 id: $('#operationId').text(),

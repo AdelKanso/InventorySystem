@@ -20,8 +20,9 @@ class ValidateRoutes
             'calendar',
             'machineConsumableInfo',
             'users',
-            'print',
-            'printt',
+            'routerPrint',
+            'plasmaPrint',
+            'invoice',
             'logout'
         );
 
@@ -52,10 +53,11 @@ class ValidateRoutes
                 'router_info',
                 'machineType',
                 'calendar',
+                'routerPrint',
+                'plasmaPrint',
                 'machineConsumable',
                 'machineConsumableInfo',
-                'print',
-                'printt',
+                'invoice',
                 'users'
             );
         if (in_array($section, $items1)) {

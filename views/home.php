@@ -64,7 +64,7 @@
                     <div class="panel-heading" id="electrodeBody">
                         <div class="row">
                             <div class="col-xs-3">
-                                <img src="dist/electrode.png" width="60" height="70">
+                                <img src="dist/images/electrode.png" width="60" height="70">
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div id="electrode" class="huge"></div>
@@ -86,7 +86,7 @@
                     <div class="panel-heading" id="nozzleBody">
                         <div class="row">
                             <div class="col-xs-3">
-                                <img src="dist/nozzle.png" width="60" height="70">
+                                <img src="dist/images/nozzle.png" width="60" height="70">
                             </div>
                             <div class="col-xs-9 text-right">
                                 <div id="nozzle" class="huge"></div>
@@ -201,12 +201,9 @@
             </div>
         </div>
     </div>
-    <!-- /.container-fluid -->
     <div id="footerDiv">
-        <div id="chartContainer" style="height: 200px; width: 45%;float: left;margin-left: 50px;"></div>
-        <div id="hideTrial"></div>
-        <div id="chartContainerr" style="height: 200px; width: 45%;float: right;margin-right: 50px;"></div>
-        <div id="hideTrial2"></div>
+        <div id="chartContainer" style="height: 100%;width: 40%;float: left;margin-left: 50px;"></div>
+        <div id="chartContainerr" style="height: 100%; width: 40%;float: right;margin-right: 50px;"></div>
     </div>
 </div>
 

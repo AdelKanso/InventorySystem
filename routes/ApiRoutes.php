@@ -208,25 +208,28 @@ class ApiRoutes extends Route
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'print':
+            case 'invoice':
                 if (self::$method == 'GET')
                     PrintController::get();
-                else if (self::$method == 'PATCH')
-                    PrintController::getById(self::$data);
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
-            case 'printt':
-                if (self::$method == 'GET')
-                    PrintController::get();
-                else if (self::$method == 'PATCH')
-                PrintController::getByIdd(self::$data);
+            case 'routerPrint':
+                if (self::$method == 'PATCH') {
+                    PrintController::getRouterOpById(self::$data);
+                }
+                else
+                    self::response(404, ["message" => "Page not found!"]);
+                break;
+            case 'plasmaPrint':
+                if (self::$method == 'PATCH')
+                    PrintController::getPlasmaOpById(self::$data);
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'tables':
                 if (self::$method == 'GET')
-                    TableController::count();
+                    TableController::dashboard();
                 else
                     self::response(404, ["message" => "Page not found!"]);
                 break;

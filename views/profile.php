@@ -28,7 +28,7 @@
                                 <div class="form-group">
                                     <label>Password*</label>
                                     <input class="form-control" name="password" type="password"
-                                           placeholder="Current or new password">
+                                           placeholder="New password">
                                 </div>
                                 <div class="form-group">
                                     <label>Password again*</label>

@@ -12,7 +12,7 @@
                 <div class="error-actions">
                     <a href="/" class="btn btn-primary btn-lg"><span
                                 class="glyphicon glyphicon-home"></span>
-                        Take Me Home </a><a href="http://www.maaluma.net" class="btn btn-default btn-lg"><span
+                        Take Me Home </a><a href="mailto:41830538@students.liu.edu.lb" class="btn btn-default btn-lg"><span
                                 class="glyphicon glyphicon-envelope"></span> Contact Support </a>
                 </div>
             </div>

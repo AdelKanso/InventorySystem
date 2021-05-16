@@ -37,7 +37,6 @@ class LoginController extends Controller
             if(session_id() == '' || !isset($_SESSION)) {
                 session_start();
             }
-            new ActivitySummary();
             $_SESSION['username'] = $data['email'];
         }
     }
@@ -46,6 +45,8 @@ class LoginController extends Controller
         session_destroy();
         if(isset($_SESSION['username']))
             unset($_SESSION['username']);
+        if(isset($_SESSION['userId']))
+         unset($_SESSION['userId']);
         header('Location: /login');
     }
 }

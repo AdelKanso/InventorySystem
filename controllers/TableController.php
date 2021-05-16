@@ -6,7 +6,7 @@ require_once __DIR__ . '/../model/Calendar.php';
 
 class TableController extends Controller
 {
-    public static function count()
+    public static function dashboard()
     {
         $customers = new Customer();
         $customers = $customers->count();

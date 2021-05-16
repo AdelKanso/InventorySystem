@@ -128,7 +128,7 @@
     <h5 class="center" id="companyNameBig" style="COLOR: #0275d8;font-size: 36px;font-weight: bold;">Hemede Industry</h5>
     <div class="row">
         <div class="col-lg-4 col-sm-4 col-md-4">
-            <img src="/dist/aaaa.ico">
+            <img src="/dist/images/logo.ico">
         </div>
         <div class=" col-lg-4 col-sm-4  col-md-4">
             <p style="text-align: center;margin-top: 28px;">
@@ -338,7 +338,7 @@
             var vat = $('#vat');
             var vatTotal = $('#vatTotal');
             $("#dateDes").text(getFormattedDate(new Date()));
-            getCustomer();
+            printInvoice();
             var row = $(".itemDes").first();
             $("#itemPrint").empty();
             $(".itemRow").each(function(i, e) {
@@ -390,7 +390,7 @@
             var vat = $('#vat');
             var vatTotal = $('#vatTotal');
             $("#dateDes").text(getFormattedDate(new Date()));
-            getCustomer();
+            printInvoice();
             var row = $(".itemDes").first();
             $("#itemPrint").empty();
             $(".itemRow").each(function(i, e) {

@@ -19,7 +19,7 @@ class PrintController extends Controller
         $data['dataa']= $operationn;
         echo json_encode($data);
     }
-    public static function getById($data)
+    public static function getRouterOpById($data)
     {
         $operation = new Router();
         $operation = $operation->getById($data);
@@ -41,7 +41,7 @@ class PrintController extends Controller
         echo json_encode($data);
         
     }
-    public static function getByIdd($data)
+    public static function getPlasmaOpById($data)
     {
         $operation = new Plasma();
         $operation = $operation->getById($data);
@@ -58,8 +58,6 @@ class PrintController extends Controller
         $data['data'] ['operation']= $operation;
         $data['data'] ['consumable']= $consumable;
         $data['data'] ['machine']= $machine;
-
-
         
         echo json_encode($data);
         

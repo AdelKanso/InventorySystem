@@ -87,11 +87,9 @@ class WebRoutes extends Route
             case '':
                 HomeController::index();
                 break;
-            case 'print':
+            case 'invoice':
                 PrintController::index();
                 break;
-            case 'printt':
-                PrintController::index();
                 break;
             case 'profile':
                 ProfileController::index();
