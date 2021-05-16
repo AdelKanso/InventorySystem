@@ -19,20 +19,26 @@ USE `inv_system`;
 
 -- Dumping structure for table inv_system.calendar
 CREATE TABLE IF NOT EXISTS `calendar` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `dayy` int(11) NOT NULL,
   `monthh` varchar(3) NOT NULL DEFAULT '',
   `eventDescription` varchar(220) NOT NULL,
-  PRIMARY KEY (`dayy`,`monthh`,`eventDescription`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `user_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `FK_calendar_users` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
--- Dumping data for table inv_system.calendar: ~4 rows (approximately)
+-- Dumping data for table inv_system.calendar: ~6 rows (approximately)
 DELETE FROM `calendar`;
 /*!40000 ALTER TABLE `calendar` DISABLE KEYS */;
-INSERT INTO `calendar` (`dayy`, `monthh`, `eventDescription`) VALUES
-	(5, 'Mar', 'adsdsa'),
-	(10, 'Nov', 'asdasd'),
-	(18, 'Mar', 'asd'),
-	(20, 'Mar', 'sdfwer');
+INSERT INTO `calendar` (`id`, `dayy`, `monthh`, `eventDescription`, `user_id`) VALUES
+	(1, 5, 'Mar', 'adsdsa', 2),
+	(2, 10, 'Nov', 'asdasd', 2),
+	(3, 15, 'May', 'kifakkkkkkkkkkkkkk', 2),
+	(4, 18, 'Mar', 'asd', 2),
+	(6, 22, 'May', 'dammmeeee', 26),
+	(8, 29, 'May', 'sdfwer', 2);
 /*!40000 ALTER TABLE `calendar` ENABLE KEYS */;
 
 -- Dumping structure for table inv_system.customers
@@ -80,7 +86,7 @@ CREATE TABLE IF NOT EXISTS `employees` (
   UNIQUE KEY `phone` (`phone`)
 ) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
 
--- Dumping data for table inv_system.employees: ~17 rows (approximately)
+-- Dumping data for table inv_system.employees: ~16 rows (approximately)
 DELETE FROM `employees`;
 /*!40000 ALTER TABLE `employees` DISABLE KEYS */;
 INSERT INTO `employees` (`id`, `name`, `address`, `phone`, `gender`, `doj`) VALUES
@@ -121,12 +127,12 @@ CREATE TABLE IF NOT EXISTS `machineconsumable` (
 DELETE FROM `machineconsumable`;
 /*!40000 ALTER TABLE `machineconsumable` DISABLE KEYS */;
 INSERT INTO `machineconsumable` (`id`, `machineType_id`, `name`, `serialNumber`, `description`, `price`, `quantity`) VALUES
-	(8, 3, 'electrode', '3122222', 'asdasd', 6, 56),
-	(9, 3, 'nozzle', '1231238', 'ashndahsd', 15, 3118),
-	(10, 3, 'shield', '123122', 'pokk', 20, 117),
-	(11, 4, 'tool', '123123', 'okkki', 123, 48),
-	(12, 4, 'collet', '123123321', 'dasd', 12312, 98),
-	(13, 4, 'toolholder', 'dasdasd', 'adsas', 123, 10);
+	(8, 3, 'electrode', '3122222', 'asdasd', 6, 51),
+	(9, 3, 'nozzle', '1231238', 'ashndahsd', 15, 3113),
+	(10, 3, 'shield', '123122', 'pokk', 20, 112),
+	(11, 4, 'tool', '123123', 'okkki', 123, 47),
+	(12, 4, 'collet', '123123321', 'dasd', 12312, 97),
+	(13, 4, 'toolholder', 'dasdasd', 'adsas', 123, 9);
 /*!40000 ALTER TABLE `machineconsumable` ENABLE KEYS */;
 
 -- Dumping structure for table inv_system.machinetype
@@ -201,11 +207,16 @@ CREATE TABLE IF NOT EXISTS `plasma` (
   CONSTRAINT `FK_operations_employees` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_operations_machinetype` FOREIGN KEY (`machineType_id`) REFERENCES `machinetype` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `FK_operations_stocks` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 -- Dumping data for table inv_system.plasma: ~0 rows (approximately)
 DELETE FROM `plasma`;
 /*!40000 ALTER TABLE `plasma` DISABLE KEYS */;
+INSERT INTO `plasma` (`id`, `name`, `stockQuantity`, `customer_id`, `employee_id`, `fuelprice`, `cost`, `price`, `dos`, `machineType_id`, `stock_id`, `electrode`, `nozzle`, `shield`) VALUES
+	(2, 'kadsmk', 1, 2, 2, 20, 122.222, 20, '2021-05-16', 3, 31, 2, 2, 2),
+	(3, 'asd', 1, 2, 2, 10, 71.222, 2, '2021-05-29', 3, 31, 1, 1, 1),
+	(4, '11', 1, 2, 2, 1, 62.222, 200, '2021-05-28', 3, 31, 1, 1, 1),
+	(5, 'ADKJDA', 1, 2, 2, 1, 62.222, 1, '2021-05-29', 3, 31, 1, 1, 1);
 /*!40000 ALTER TABLE `plasma` ENABLE KEYS */;
 
 -- Dumping structure for table inv_system.rawmaterials
@@ -254,14 +265,14 @@ CREATE TABLE IF NOT EXISTS `router` (
   CONSTRAINT `router_ibfk_1` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `router_ibfk_2` FOREIGN KEY (`employee_id`) REFERENCES `employees` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `router_ibfk_3` FOREIGN KEY (`stock_id`) REFERENCES `stocks` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
 
--- Dumping data for table inv_system.router: ~12 rows (approximately)
+-- Dumping data for table inv_system.router: ~10 rows (approximately)
 DELETE FROM `router`;
 /*!40000 ALTER TABLE `router` DISABLE KEYS */;
 INSERT INTO `router` (`id`, `name`, `tool`, `collet`, `toolholder`, `machineType_id`, `stock_id`, `stockQuantity`, `customer_id`, `employee_id`, `fuelprice`, `cost`, `price`, `dos`, `image`) VALUES
 	(57, 'helllo123', 0, 0, 0, 4, 39, 2, 2, 2, 0, 60.4, 1231, '2020-03-28', NULL),
-	(58, '132123', 0, 0, 0, 4, 38, 1, 2, 2, 21, 26.2, 2500, '2020-10-11', NULL),
+	(58, '132123', 0, 0, 0, 4, 38, 1, 2, 2, 10, 15.2, 2500, '2020-10-23', NULL),
 	(61, 'sami', 0, 0, 0, 4, 31, 1, 2, 2, 0, 20.222, 20, '2020-03-27', NULL),
 	(62, 'ok', 0, 0, 0, 4, 38, 1, 2, 2, 0, 5.2, 90, '2020-03-08', NULL),
 	(63, 'hello', 20, 120, 123, 4, 37, 1, 2, 2, 0, 0, 23, '2020-04-17', NULL),
@@ -271,7 +282,8 @@ INSERT INTO `router` (`id`, `name`, `tool`, `collet`, `toolholder`, `machineType
 	(68, 'asd', 1, 1, 1, 4, 39, 1, 2, 2, 20, 12608.2, 1200, '2020-10-08', NULL),
 	(69, 'asd', 0, 0, 0, 4, 41, 1, 2, 2, 12, 212, 1, '2020-03-14', NULL),
 	(70, 'test', 1, 1, 1, 4, 31, 1, 2, 2, 10, 12588.2, 2000, '2020-10-11', NULL),
-	(71, 'asdk', 1, 1, 1, 4, 31, 1, 2, 2, 20, 12598.2, 20, '2021-04-30', NULL);
+	(71, 'asdk', 1, 1, 1, 4, 31, 1, 2, 2, 20, 12598.2, 20, '2021-04-29', NULL),
+	(72, 'askd', 1, 1, 1, 4, 31, 1, 2, 2, 1, 12579.2, 1, '2021-05-31', NULL);
 /*!40000 ALTER TABLE `router` ENABLE KEYS */;
 
 -- Dumping structure for table inv_system.stocks
@@ -294,13 +306,13 @@ CREATE TABLE IF NOT EXISTS `stocks` (
 DELETE FROM `stocks`;
 /*!40000 ALTER TABLE `stocks` DISABLE KEYS */;
 INSERT INTO `stocks` (`id`, `rawMaterial_id`, `merchant_id`, `weight`, `width`, `height`, `thickness`, `price`, `quantity`, `dop`) VALUES
-	(31, 8, 1, 1, 0, 0, 0, 20.222, 4, '2020-10-20'),
+	(31, 8, 1, 1, 0, 0, 0, 20.222, 99, '2021-05-20'),
 	(33, 8, 1, 3.3, 0, 0, 0, 20.5, 50, '2020-10-22'),
 	(36, 8, 1, 1, 0, 0, 0, 1, 4, '2020-02-15'),
 	(37, 8, 1, 1, 0, 0, 0, 1, 40, '2020-10-07'),
 	(38, 8, 1, 2.3, 80.6, 40.3, 96, 5.2, 20, '2020-03-28'),
 	(39, 8, 1, 20.6, 8.3, 6.1, 9.2, 30.2, 14, '2020-03-19'),
-	(40, 18, 1, 20, 10, 10, 10, 300, 8, '2020-03-28'),
+	(40, 18, 1, 20, 10, 10, 10, 300, 10, '2021-05-28'),
 	(41, 18, 1, 20, 2000, 1000, 9, 200, 29, '2020-03-16');
 /*!40000 ALTER TABLE `stocks` ENABLE KEYS */;
 
