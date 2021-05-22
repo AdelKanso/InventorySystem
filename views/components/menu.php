@@ -5,7 +5,7 @@
                 <a href="/" style="color:#0275d8;font-size: 18px;"><i class="fa fa-dashboard fa-fw"></i> Dashboard</a>
             </li>
             <?php
-            if ($_SESSION['role'] == 'admin'||$_SESSION['role'] == 'accountant'||$_SESSION['role'] == 'engineer') {
+            if ($_SESSION['role'] == 'admin'||$_SESSION['role'] == 'engineer') {
             ?>
             <li class="">
                 <a href="/plasma" style="color:#0275d8;font-size: 18px;"><img src="dist/images/plasmaImage.jpg" alt="" width="24" height="20"> Plasma Operations</a>
@@ -13,6 +13,12 @@
             <li class="">
                 <a href="/router" style="color:#0275d8;font-size: 18px;"><img src="dist/images/routerImage.png" alt="" width="24" height="20"> Router Operations</a>
             </li>
+            <?php
+            }
+            ?>
+            <?php
+            if ($_SESSION['role'] == 'admin'||$_SESSION['role'] == 'accountant'||$_SESSION['role'] == 'engineer') {
+            ?>
             <li class="">
                 <a href="/customers" style="color:#0275d8;font-size: 18px;"><i class="fa fa-users fa-fw"></i> Customers</a>
             </li>
