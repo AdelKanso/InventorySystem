@@ -33,7 +33,7 @@ class Stock extends Model
     }
     function getStock(){
         $json = [];
-        $sql = "SELECT  stocks.*,rawMaterials.`name`,rawMaterials.`subtype` FROM stocks ,rawMaterials where stocks.rawMaterial_id=rawMaterials.id;";
+        $sql = "SELECT  stocks.*,rawmaterials.`name`,rawmaterials.`subtype` FROM stocks ,rawmaterials where stocks.rawMaterial_id=rawmaterials.id;";
         $result = $this->conn->query($sql);
         while($row = mysqli_fetch_assoc($result)){
             $row['id'] = (int) $row['id'];
@@ -66,7 +66,7 @@ class Stock extends Model
     }
 
     function show($id){
-        $sql = "SELECT stocks.*,rawMaterials.* FROM stocks,rawMaterials WHERE stocks.id='$id' and stocks.rawMaterial_id=rawMaterials.id;";
+        $sql = "SELECT stocks.*,rawmaterials.* FROM stocks,rawmaterials WHERE stocks.id='$id' and stocks.rawMaterial_id=rawmaterials.id;";
         
         $result = $this->conn->query($sql);
 

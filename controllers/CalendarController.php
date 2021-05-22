@@ -6,6 +6,13 @@ require_once __DIR__ . '/../model/Calendar.php';
 
 class CalendarController extends Controller
 {
+    public static function get()
+    {
+        $calendar = new Calendar();
+        $calendars = $calendar->getAll();
+        $data['data'] = $calendars;
+        echo json_encode($data);
+    }
 
     public static function insert($data)
     {

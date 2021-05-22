@@ -69,7 +69,6 @@ table#table.dataTable thead:hover {
 
 .canvasjs-chart-canvas {
     margin-left: 10px;
-    margin-top: 9px;
 }
 
 #footerDiv {
@@ -77,9 +76,8 @@ table#table.dataTable thead:hover {
     border-bottom: none;
     border-radius: 10px 10px 0 0;
     position: absolute;
-    bottom: 0;
     display: block;
-    height: 213px;
+    height: 260px;
     width: 80%;
     left: 10%;
     bottom: 0;

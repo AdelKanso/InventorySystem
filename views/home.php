@@ -177,19 +177,18 @@
                 </div>
             </div>
             <div CLASS="col-lg-5">
-                <div class="panel panel-primary">
+                <div class="panel panel-danger">
                     <div class="panel-heading">
-                        <i class="fa fa-credit-card fa-fw"></i> Latest Customers
+                        <i class="fa fa-exclamation-triangle"></i> Nearly out of stock
                     </div>
                     <div class="panel-body">
                         <div class="table-responsive" style="overflow-x: hidden;overflow-y: hidden;">
                             <table class="table table-striped table-bordered table-hover">
                                 <thead>
                                     <tr>
-                                        <th>ID</th>
                                         <th>Name</th>
-                                        <th>Address</th>
-                                        <th>Phone</th>
+                                        <th>Serial Number</th>
+                                        <th>Quantity</th>
                                     </tr>
                                 </thead>
                                 <tbody class="latest-customers">

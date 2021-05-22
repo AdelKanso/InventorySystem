@@ -42,6 +42,14 @@ class MachineConsumableController extends Controller
         }
     }
 
+    public static function nearOfStock()
+    {
+        $machineConsumable = new MachineConsumable();
+        $machineConsumables = $machineConsumable->nearOutOfStock();
+        $data['data'] =$machineConsumables;
+        echo json_encode($data);
+    }
+
     public static function insert($data){
         $machineConsumable = new MachineConsumable();
         $result = true;

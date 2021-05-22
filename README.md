@@ -1,11 +1,12 @@
 # InventorySystem
-setup db:
-model/model.php: db connection
+setup data base connection:
+
+inventorySystem/model/model.php
 
 Add project domain name in apache/conf/extra/httpd-vhosts.conf:
 
 <VirtualHost 127.0.0.1>
-    DocumentRoot "D:\Program Files\Xampp\htdocs\ssss\public"
+    DocumentRoot "<--project path-->\public"
     ServerName www.inventory-system.local
 	ServerAlias inventory-system.local
 </VirtualHost>

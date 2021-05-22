@@ -47,108 +47,118 @@ class ApiRoutes extends Route
             case 'users':
                 if (self::$method == 'GET')
                     UserController::get();
-                else if (self::$method == 'POST')
-                    if (isset(self::$data['table']))
-                        UserController::insert(self::$data);
-                    else
-                        UserController::showByEmployee(self::$data['employee_id']);
-                else if (self::$method == 'PATCH')
-                    if (isset(self::$data['profile']))
-                        UserController::update(self::$data, self::$data['profile']);
-                    else
-                        UserController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    UserController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        UserController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH") {
+                        if (isset(self::$data['profile']))
+                            UserController::update(self::$data, self::$data['profile']);
+                        else
+                            UserController::update(self::$data);
+                    } else {
+                        if (isset(self::$data['table']))
+                            UserController::insert(self::$data);
+                        else
+                            UserController::showByEmployee(self::$data['employee_id']);
+                    }
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'employees':
                 if (self::$method == 'GET')
                     EmployeeController::get();
                 else if (self::$method == 'POST') {
-                    if (isset(self::$data['table']))
-                        EmployeeController::insert(self::$data);
-                    else
-                        EmployeeController::show(self::$data['employee_id']);
-                } else if (self::$method == 'PATCH')
-                    EmployeeController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    EmployeeController::delete(self::$data['id']);
-                else
+                    if (self::$data["service"] == "DELETE") {
+                        EmployeeController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        EmployeeController::update(self::$data);
+                    else {
+                        if (isset(self::$data['table']))
+                            EmployeeController::insert(self::$data);
+                        else
+                            EmployeeController::show(self::$data['employee_id']);
+                    }
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'customers':
                 if (self::$method == 'GET') {
                     CustomerController::get();
-                } else if (self::$method == 'GETLATEST') {
-                    CustomerController::getLatest();
-                } else if (self::$method == 'POST')
-                    CustomerController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    CustomerController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    CustomerController::delete(self::$data['id']);
-                else
+                } else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        CustomerController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        CustomerController::update(self::$data);
+                    else if (self::$data["service"] == "GETLATEST")
+                        CustomerController::getLatest();
+                    else
+                        CustomerController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'merchants':
                 if (self::$method == 'GET')
                     MerchantController::get();
-                else if (self::$method == 'POST')
-                    MerchantController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    MerchantController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    MerchantController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        MerchantController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        MerchantController::update(self::$data);
+                    else
+                        MerchantController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'rawMaterials':
                 if (self::$method == 'GET')
                     RawMaterialController::get();
-                else if (self::$method == 'POST')
-                    RawMaterialController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    RawMaterialController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    RawMaterialController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "PATCH")
+                        RawMaterialController::update(self::$data);
+                    else if (self::$data["service"] == "DELETE")
+                        RawMaterialController::delete(self::$data['id']);
+                    else
+                        RawMaterialController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'stocks':
                 if (self::$method == 'GET')
                     StockController::get();
-                else if (self::$method == 'POST')
-                    StockController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    StockController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    StockController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        StockController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        StockController::update(self::$data);
+                    else
+                        StockController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'machineType':
                 if (self::$method == 'GET')
                     MachineTypeController::get();
-                else if (self::$method == 'POST')
-                    MachineTypeController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    MachineTypeController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    MachineTypeController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        MachineTypeController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        MachineTypeController::update(self::$data);
+                    else
+                        MachineTypeController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'machineConsumable':
                 if (self::$method == 'GET')
                     MachineConsumableController::get();
-                else if (self::$method == 'POST')
-                    MachineConsumableController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    MachineConsumableController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    MachineConsumableController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        MachineConsumableController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        MachineConsumableController::update(self::$data);
+                    else
+                        MachineConsumableController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'stockInfo':
@@ -160,39 +170,48 @@ class ApiRoutes extends Route
             case 'machineConsumableInfo':
                 if (self::$method == 'GET')
                     MachineConsumable::info();
-                else
+                else if (self::$method == "POST") {
+                    MachineConsumableController::nearOfStock();
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'plasma':
                 if (self::$method == 'GET')
                     PlasmaController::get();
-                else if (self::$method == 'POST')
-                    PlasmaController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    PlasmaController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    PlasmaController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        PlasmaController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+                        PlasmaController::update(self::$data);
+                    else
+                        PlasmaController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'router':
                 if (self::$method == 'GET')
                     RouterController::get();
-                else if (self::$method == 'POST')
-                    RouterController::insert(self::$data);
-                else if (self::$method == 'PATCH')
-                    RouterController::update(self::$data);
-                else if (self::$method == 'DELETE')
-                    RouterController::delete(self::$data['id']);
-                else
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        RouterController::delete(self::$data['id']);
+                    } else if (self::$data["service"] == "PATCH")
+
+                        RouterController::update(self::$data);
+                    else
+                        RouterController::insert(self::$data);
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'calendar':
-                if (self::$method == 'POST') {
-                    CalendarController::insert(self::$data);
-                } else if (self::$method == 'DELETE') {
-                    parse_str(file_get_contents('php://input'), self::$data);
-                    CalendarController::delete(self::$data['dayy'], self::$data['monthh'], self::$data['description']);
+                if(self::$method == 'GET'){
+                    CalendarController::get();
+                }
+                else if (self::$method == 'POST') {
+                    if (self::$data["service"] == "DELETE") {
+                        parse_str(file_get_contents('php://input'), self::$data);
+                        CalendarController::delete(self::$data['dayy'], self::$data['monthh'], self::$data['description']);
+                    } else
+                        CalendarController::insert(self::$data);
                 } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
@@ -215,14 +234,13 @@ class ApiRoutes extends Route
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'routerPrint':
-                if (self::$method == 'PATCH') {
+                if (self::$method == 'POST') {
                     PrintController::getRouterOpById(self::$data);
-                }
-                else
+                } else
                     self::response(404, ["message" => "Page not found!"]);
                 break;
             case 'plasmaPrint':
-                if (self::$method == 'PATCH')
+                if (self::$method == 'POST')
                     PrintController::getPlasmaOpById(self::$data);
                 else
                     self::response(404, ["message" => "Page not found!"]);

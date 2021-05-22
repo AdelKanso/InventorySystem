@@ -83,7 +83,9 @@
 #month {
     margin-right: 40px;
 }
-
+.dt-button-collection{
+    margin-top: 0px !important;
+}
 .month {
     color: white;
     font-weight: bold;

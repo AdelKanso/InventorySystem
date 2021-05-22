@@ -22,7 +22,18 @@ class Calendar extends Model
         }
         return $json;
     }
-
+    
+    function getAll()
+    {
+        session_start();
+        $json = [];
+        $sql = "SELECT * FROM calendar;";
+        $result = $this->conn->query($sql);
+        while ($row = mysqli_fetch_assoc($result)) {
+            $json[] = $row;
+        }
+        return $json;
+    }
     function show($dayy, $monthh)
     {
         $sql = "SELECT * FROM calendar WHERE dayy='$dayy',monthh='$monthh';";

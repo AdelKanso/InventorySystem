@@ -44,6 +44,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/customers',
                     data: function(d) {
+                        d.service = null;
                         d.name = $("#DTE_Field_name").val();
                         d.address = $("#DTE_Field_address").val();
                         d.phone = $("#DTE_Field_phone").val();
@@ -63,7 +64,7 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/customers',
                     data: function(d) {
                         d.id = row_id;
@@ -71,6 +72,7 @@ $(document).ready(function() {
                         d.address = $("#DTE_Field_address").val();
                         d.email = $("#DTE_Field_email").val();
                         d.phone = $("#DTE_Field_phone").val();
+                        d.service = "PATCH"
                         delete d.data;
                         delete d.action;
                     },
@@ -86,9 +88,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/customers',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -147,6 +150,24 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the customer?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -201,7 +222,8 @@ $(document).ready(function() {
                     url: '/api/employees',
                     data: function(d) {
                         d.table = true,
-                            d.name = $("#DTE_Field_name").val();
+                            d.service = null;
+                        d.name = $("#DTE_Field_name").val();
                         d.address = $("#DTE_Field_address").val();
                         d.phone = $("#DTE_Field_phone").val();
                         d.gender = $("input[name='gender']:checked").val();
@@ -221,7 +243,7 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/employees',
                     data: function(d) {
                         d.id = row_id;
@@ -230,6 +252,7 @@ $(document).ready(function() {
                         d.phone = $("#DTE_Field_phone").val();
                         d.gender = $("input[name='gender']:checked").val();
                         d.doj = $("#DTE_Field_doj").val();
+                        d.service = "PATCH"
                         delete d.data;
                         delete d.action;
                     },
@@ -245,9 +268,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/employees',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -306,7 +330,8 @@ $(document).ready(function() {
                 },
                 remove: {
                     title: "Trash Employee"
-                }
+                },
+
             }
         });
 
@@ -320,6 +345,25 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the employee?';
                 }
+            },
+            {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -369,7 +413,8 @@ $(document).ready(function() {
                     url: '/api/users',
                     data: function(d) {
                         d.table = true,
-                            d.emp_id = $("#DTE_Field_emp_id").val();
+                            d.service = null;
+                        d.emp_id = $("#DTE_Field_emp_id").val();
                         d.email = $("#DTE_Field_email").val();
                         d.role = $("input[name='role']:checked").val();
                         delete d.data;
@@ -387,13 +432,14 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/users',
                     data: function(d) {
                         d.id = row_id;
                         d.emp_id = $("#DTE_Field_emp_id").val();
                         d.email = $("#DTE_Field_email").val();
                         d.role = $("input[name='role']:checked").val();
+                        d.service = "PATCH";
                         delete d.data;
                         delete d.action;
                     },
@@ -409,9 +455,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/users',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -490,6 +537,24 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the user?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -541,6 +606,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/merchants',
                     data: function(d) {
+                        d.service = null;
                         d.name = $("#DTE_Field_name").val();
                         d.address = $("#DTE_Field_address").val();
                         d.description = $("#DTE_Field_description").val();
@@ -560,10 +626,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/merchants',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.name = $("#DTE_Field_name").val();
                         d.address = $("#DTE_Field_address").val();
                         d.description = $("#DTE_Field_description").val();
@@ -583,9 +650,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/merchants',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -644,6 +712,24 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the merchant?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -652,7 +738,7 @@ $(document).ready(function() {
 
     } else if (location.pathname == '/rawMaterials') {
 
-        $('.page-header').html('RawMaterials');
+        $('.page-header').html('Raw Materials');
 
         $('thead tr').append($('<th />', { text: 'Name' }));
         $('thead tr').append($('<th />', { text: 'Subtype' }));
@@ -693,12 +779,13 @@ $(document).ready(function() {
                     data: function(d) {
                         d.name = $("#DTE_Field_name").val();
                         d.subtype = $("#DTE_Field_subtype").val();
+                        d.service = null;
                         delete d.data;
                         delete d.action;
                     },
                     success: function() {
                         table.ajax.reload();
-                        $.notify('New rawMaterial added.', 'success');
+                        $.notify('New raw Material added.', 'success');
                     },
                     error: function(response) {
                         var json = $.parseJSON(response.responseText);
@@ -708,17 +795,18 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/rawMaterials',
                     data: function(d) {
                         d.id = row_id;
                         d.name = $("#DTE_Field_name").val();
                         d.subtype = $("#DTE_Field_subtype").val();
+                        d.service = "PATCH";
                         delete d.data;
                         delete d.action;
                     },
                     success: function() {
-                        $.notify('RawMaterial updated.', 'success');
+                        $.notify('Raw Material updated.', 'success');
                         table.ajax.reload();
                     },
                     error: function(response) {
@@ -729,15 +817,16 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/rawMaterials',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
                     },
                     success: function() {
-                        $.notify('RawMaterial has been trashed.', 'success');
+                        $.notify('Raw Material has been trashed.', 'success');
                         table.ajax.reload();
                     },
                     error: function(response) {
@@ -761,13 +850,13 @@ $(document).ready(function() {
             }],
             i18n: {
                 create: {
-                    title: "Add RawMaterial"
+                    title: "Add Raw Material"
                 },
                 edit: {
-                    title: "Edit RawMaterial"
+                    title: "Edit Raw Material"
                 },
                 remove: {
-                    title: "Trash RawMaterial"
+                    title: "Trash Raw Material"
                 }
             }
         });
@@ -780,8 +869,26 @@ $(document).ready(function() {
                 className: 'btn btn-danger btn-outline Btn',
                 editor: editor,
                 formMessage: function(e, dt) {
-                    return 'Are you sure you want to trash the rawMaterial?';
+                    return 'Are you sure you want to trash the raw material?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -829,6 +936,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/machineType',
                     data: function(d) {
+                        d.service = null;
                         d.name = $("#DTE_Field_name").val();
                         d.consumptionRate = $("#DTE_Field_consumptionRate").val();
                         delete d.data;
@@ -846,10 +954,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/machineType',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.name = $("#DTE_Field_name").val();
                         d.consumptionRate = $("#DTE_Field_consumptionRate").val();
                         delete d.data;
@@ -867,10 +976,11 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/machineType',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "DELETE";
                         delete d.data;
                         delete d.action;
                     },
@@ -978,6 +1088,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/machineConsumable',
                     data: function(d) {
+                        d.service = null;
                         d.machineType_id = $("#DTE_Field_machineType_id").val();
                         d.name = $("#DTE_Field_name").val();
                         d.serialNumber = $("#DTE_Field_serialNumber").val();
@@ -999,10 +1110,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/machineConsumable',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.machineType_id = $("#DTE_Field_machineType_id").val();
                         d.name = $("#DTE_Field_name").val();
                         d.serialNumber = $("#DTE_Field_serialNumber").val();
@@ -1024,10 +1136,11 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/machineConsumable',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "DELETE";
                         delete d.data;
                         delete d.action;
                     },
@@ -1113,6 +1226,24 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the machine consumable?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -1181,6 +1312,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/stocks',
                     data: function(d) {
+                        d.service = null;
                         d.rawMaterial_id = $("#DTE_Field_rawMaterial_id").val();
                         d.merchant_id = $("#DTE_Field_merchant_id").val();
                         d.weight = $("#DTE_Field_weight").val();
@@ -1205,10 +1337,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/stocks',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.rawMaterial_id = $("#DTE_Field_rawMaterial_id").val();
                         d.merchant_id = $("#DTE_Field_merchant_id").val();
                         d.weight = $("#DTE_Field_weight").val();
@@ -1233,10 +1366,11 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/stocks',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "DELETE";
                         delete d.data;
                         delete d.action;
                     },
@@ -1359,6 +1493,24 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the stock?';
                 }
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
             }
         ]);
 
@@ -1436,6 +1588,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/plasma',
                     data: function(d) {
+                        d.service = null;
                         d.name = $("#DTE_Field_name").val();
                         d.electrode = $("#DTE_Field_electrode").val();
                         d.nozzle = $("#DTE_Field_nozzle").val();
@@ -1462,10 +1615,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/plasma',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.name = $("#DTE_Field_name").val();
                         d.electrode = $("#DTE_Field_electrode").val();
                         d.nozzle = $("#DTE_Field_nozzle").val();
@@ -1493,9 +1647,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/plasma',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -1642,7 +1797,25 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the operation?';
                 }
-            },
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
+            }
         ]);
 
         table.buttons().container()
@@ -1719,6 +1892,7 @@ $(document).ready(function() {
                     type: 'POST',
                     url: '/api/router',
                     data: function(d) {
+                        d.service = null;
                         d.name = $("#DTE_Field_name").val();
                         d.tool = $("#DTE_Field_tool").val();
                         d.collet = $("#DTE_Field_collet").val();
@@ -1745,10 +1919,11 @@ $(document).ready(function() {
                     }
                 },
                 edit: {
-                    type: 'PATCH',
+                    type: 'POST',
                     url: '/api/router',
                     data: function(d) {
                         d.id = row_id;
+                        d.service = "PATCH";
                         d.name = $("#DTE_Field_name").val();
                         d.tool = $("#DTE_Field_tool").val();
                         d.collet = $("#DTE_Field_collet").val();
@@ -1775,9 +1950,10 @@ $(document).ready(function() {
                     }
                 },
                 remove: {
-                    type: 'DELETE',
+                    type: 'POST',
                     url: '/api/router',
                     data: function(d) {
+                        d.service = "DELETE";
                         d.id = row_id;
                         delete d.data;
                         delete d.action;
@@ -1924,7 +2100,25 @@ $(document).ready(function() {
                 formMessage: function(e, dt) {
                     return 'Are you sure you want to trash the operation?';
                 }
-            },
+            }, {
+                'extend': 'collection',
+                'text': "Export",
+                'autoClose': true,
+                'dropup': false,
+                'className': 'btn btn-info btn-outline Btn',
+                'buttons': [
+                    { 'extend': 'copy', 'className': 'btn btn-warning btn-outline Btn' },
+                    { 'extend': 'excel', 'className': 'btn btn-success btn-outline Btn' },
+                    { 'extend': 'csv', 'className': 'btn btn-primary btn-outline Btn' },
+                    {
+                        'extend': 'pdf',
+                        'orientation': 'landscape',
+                        'className': 'btn btn-danger btn-outline Btn',
+                        'pageSize': 'LEGAL'
+                    },
+                    { 'extend': 'print', 'className': 'btn btn-info btn-outline Btn' }
+                ]
+            }
         ]);
 
         table.buttons().container()
@@ -2028,13 +2222,13 @@ $(document).ready(function() {
             }
         });
         $.ajax({
-            url: '/api/customers',
-            type: 'GETLATEST',
+            url: '/api/machineConsumableInfo',
+            type: 'POST',
             success: function(response) {
                 response = $.parseJSON(response);
-                var customers = response['data'];
-                $.each(customers, function(i, customer) {
-                    $(".latest-customers").append("<tr><td>" + customer['id'] + "</td><td>" + customer['name'] + "</td><td>" + customer['address'] + "</td><td>" + customer['phone'] + "</td></tr>");
+                var consumables = response['data'];
+                $.each(consumables, function(i, consumable) {
+                    $(".latest-customers").append("<tr><td>" + consumable['name'] + "</td><td>" + consumable['serialNumber'] + "</td><td>" + consumable['quantity'] + "</td></tr>");
                 });
             },
             error: function() {
@@ -2061,6 +2255,7 @@ $(document).ready(function() {
             }
         });
     } else if (location.pathname == '/profile') {
+        $('.page-header').html('Profile');
         var userDetails;
         var uid = $("input[name=employee]").val();
         $.ajax({
@@ -2068,6 +2263,7 @@ $(document).ready(function() {
             type: 'POST',
             async: false,
             data: {
+                serice: null,
                 employee_id: uid
             },
             success: function(response) {
@@ -2082,6 +2278,7 @@ $(document).ready(function() {
             url: '/api/employees',
             type: 'POST',
             data: {
+                service: null,
                 employee_id: uid
             },
             success: function(response) {
@@ -2138,13 +2335,14 @@ $(document).ready(function() {
         $("input[type=password]").val("");
         $.ajax({
             url: '/api/users',
-            type: 'PATCH',
+            type: 'POST',
             data: {
                 profile: true,
                 employee_id: uid,
                 email: mail,
                 password: pass,
-                password_confirmation: pass_confirm
+                password_confirmation: pass_confirm,
+                service: "PATCH"
             },
             success: function() {
 
@@ -2170,14 +2368,15 @@ $(document).ready(function() {
         var employee_gender = $('input[name=gender]:checked').val();
         $.ajax({
             url: '/api/employees',
-            type: 'PATCH',
+            type: 'POST',
             data: {
                 id: uid,
                 name: employee_name,
                 phone: employee_phone,
                 address: employee_address,
                 doj: employee_doj,
-                gender: employee_gender
+                gender: employee_gender,
+                service: "PATCH"
             },
             success: function() {
                 $.notify("Information saved successfully.", "success");
@@ -2216,8 +2415,9 @@ function showService(operationId, machineType) {
     if (machineType == 4) {
         $.ajax({
             url: '/api/routerPrint',
-            type: 'PATCH',
+            type: 'POST',
             data: {
+                service: null,
                 id: operationId,
             },
             success: function(response) {
@@ -2242,8 +2442,9 @@ function showService(operationId, machineType) {
     } else if (machineType == 3) {
         $.ajax({
             url: '/api/plasmaPrint',
-            type: 'PATCH',
+            type: 'POST',
             data: {
+                service: null,
                 id: operationId,
             },
             success: function(response) {
@@ -2276,8 +2477,9 @@ function printInvoice() {
     if ($('#machineType').text() == 4) {
         $.ajax({
             url: '/api/routerPrint',
-            type: 'PATCH',
+            type: 'POST',
             data: {
+                service: null,
                 id: $('#operationId').text(),
             },
             success: function(response) {
@@ -2319,8 +2521,9 @@ function printInvoice() {
 
         $.ajax({
             url: '/api/plasmaPrint',
-            type: 'PATCH',
+            type: 'POST',
             data: {
+                service: null,
                 id: $('#operationId').text(),
             },
             success: function(response) {

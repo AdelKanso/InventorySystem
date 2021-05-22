@@ -7,7 +7,7 @@ class User extends Model
     function valid($email, $pass)
     {
         $sql = "SELECT * FROM users WHERE email='$email'  AND password='$pass';";
-        $result = $this->conn->query($sql);
+        $result = $this->conn->query($sql)or die(mysql_error());
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();

@@ -90,7 +90,6 @@ class WebRoutes extends Route
             case 'invoice':
                 PrintController::index();
                 break;
-                break;
             case 'profile':
                 ProfileController::index();
                 break;

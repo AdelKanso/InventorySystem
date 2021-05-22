@@ -3,27 +3,30 @@
 require_once 'Model.php';
 class Customer extends Model
 {
-    function count(){
+    function count()
+    {
         $sql = "SELECT * FROM customers;";
         $result = $this->conn->query($sql);
 
         return $result->num_rows;
     }
 
-    function get(){
+    function get()
+    {
         $json = [];
         $sql = "SELECT * FROM customers;";
         $result = $this->conn->query($sql);
-        while($row = mysqli_fetch_assoc($result)){
+        while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
         }
         return $json;
     }
-    function getLatest(){
+    function getLatest()
+    {
         $json = [];
         $sql = "SELECT * FROM customers,plasma where customers.id=customer_id LIMIT 7;";
         $result = $this->conn->query($sql);
-        while($row = mysqli_fetch_assoc($result)){
+        while ($row = mysqli_fetch_assoc($result)) {
             $row['id'] = (int) $row['id'];
             $row['name'] = $row['name'];
             $row['address'] =  $row['address'];
@@ -32,7 +35,8 @@ class Customer extends Model
         }
         return $json;
     }
-    function show($id){
+    function show($id)
+    {
         $sql = "SELECT * FROM customers WHERE id='$id';";
         $result = $this->conn->query($sql);
 
@@ -47,11 +51,12 @@ class Customer extends Model
     }
 
 
-    function insert($data){
-        if($data['email']==""){
-            $sql = "INSERT INTO customers (name, address, email, phone) VALUES ('".$data['name']."', '".$data['address']."', 'Invalid Email', '".$data['phone']."')";
-        }else{
-            $sql = "INSERT INTO customers (name, address, email, phone) VALUES ('".$data['name']."', '".$data['address']."', '".$data['email']."', '".$data['phone']."')";
+    function insert($data)
+    {
+        if ($data['email'] == "") {
+            $sql = "INSERT INTO customers (name, address, email, phone) VALUES ('" . $data['name'] . "', '" . $data['address'] . "', 'Invalid Email', '" . $data['phone'] . "')";
+        } else {
+            $sql = "INSERT INTO customers (name, address, email, phone) VALUES ('" . $data['name'] . "', '" . $data['address'] . "', '" . $data['email'] . "', '" . $data['phone'] . "')";
         }
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
@@ -62,8 +67,9 @@ class Customer extends Model
         }
     }
 
-    function update($data){
-        $sql = "UPDATE customers SET name='".$data['name']."', address='".$data['address']."', email='".$data['email']."', phone='".$data['phone']."' WHERE id=".$data["id"];
+    function update($data)
+    {
+        $sql = "UPDATE customers SET name='" . $data['name'] . "', address='" . $data['address'] . "', email='" . $data['email'] . "', phone='" . $data['phone'] . "' WHERE id=" . $data["id"];
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
             return true;
@@ -73,7 +79,8 @@ class Customer extends Model
         }
     }
 
-    function delete($id){
+    function delete($id)
+    {
         $sql = "DELETE FROM customers WHERE id='$id'";
 
         if ($this->conn->query($sql) === TRUE) {

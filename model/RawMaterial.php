@@ -7,7 +7,7 @@ class RawMaterial extends Model
     function get()
     {
         $json = [];
-        $sql = "SELECT * FROM rawMaterials;";
+        $sql = "SELECT * FROM rawmaterials;";
         $result = $this->conn->query($sql);
         while ($row = mysqli_fetch_assoc($result)) {
             $json[] = $row;
@@ -18,7 +18,7 @@ class RawMaterial extends Model
 
     function insert($data)
     {
-        $sql = "INSERT INTO rawMaterials (`name`,`subtype`) VALUES ('" . $data['name'] . "', '".$data['subtype']."')";
+        $sql = "INSERT INTO rawmaterials (`name`,`subtype`) VALUES ('" . $data['name'] . "', '".$data['subtype']."')";
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
@@ -31,7 +31,7 @@ class RawMaterial extends Model
 
     function show($id)
     {
-        $sql = "SELECT * FROM rawMaterials WHERE id='$id';";
+        $sql = "SELECT * FROM rawmaterials WHERE id='$id';";
         $result = $this->conn->query($sql);
 
         if ($result->num_rows > 0) {
@@ -46,7 +46,7 @@ class RawMaterial extends Model
 
     function update($data)
     {
-        $sql = "UPDATE rawMaterials SET name='" . $data['name'] . "', subtype='".$data['subtype']."' WHERE id=" . $data["id"];
+        $sql = "UPDATE rawmaterials SET name='" . $data['name'] . "', subtype='".$data['subtype']."' WHERE id=" . $data["id"];
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
@@ -59,7 +59,7 @@ class RawMaterial extends Model
 
     function delete($id)
     {
-        $sql = "DELETE FROM rawMaterials WHERE id='$id'";
+        $sql = "DELETE FROM rawmaterials WHERE id='$id'";
 
         if ($this->conn->query($sql) === TRUE) {
             $this->conn->close();
